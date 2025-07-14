@@ -1,0 +1,281 @@
+@use "../base/settings.scss";
+@use "../base/base.scss";
+
+//Desktop
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 8.4rem);
+  padding-top: 7.5rem;
+  margin-bottom: 8.4rem;
+  box-sizing: border-box;
+  border-bottom: 0.3rem solid settings.$dark-blue;
+  background: url("../assets/login_illustrator.svg") no-repeat;
+  background-size: 23.9rem;
+  background-position: calc(100% - 2rem) calc(100% + 0.4rem);
+}
+
+.login__box,
+.login__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45.5rem;
+}
+
+.login__box {
+  box-shadow: 0 1rem 2.2rem 0 rgba(0, 0, 0, 0.08);
+  background: white;
+  padding: 5rem;
+  box-sizing: border-box;
+  margin: auto auto 40% auto;
+  border-radius: 1rem;
+
+  .head_24 {
+    margin-bottom: 5rem;
+  }
+}
+
+.login__wrapper {
+  height: 100%;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.login__logo {
+  width: 7.4rem;
+  height: auto;
+}
+
+.login__form {
+  display: grid;
+  row-gap: 4.3rem;
+  margin: auto;
+  justify-content: center;
+  justify-items: center;
+}
+
+.form__input__errors {
+  color: settings.$error-red;
+  padding-right: 2rem;
+  position: absolute;
+  line-height: 120%;
+  bottom: -1.7rem;
+}
+
+.form__input__wrapper {
+  position: relative;
+  width: fit-content;
+
+  &.with-errors {
+    animation: no-no 0.5s;
+
+    @keyframes no-no {
+      0% {
+        transform: translateX(0);
+      }
+      20% {
+        transform: translateX(-1rem);
+      }
+
+      40% {
+        transform: translateX(0.5rem);
+      }
+
+      60% {
+        transform: translateX(-0.3rem);
+      }
+
+      80% {
+        transform: translateX(0.2rem);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    label {
+      color: settings.$error-red;
+    }
+
+    .form__input {
+      &:placeholder-shown {
+        & + label {
+          color: settings.$grey;
+        }
+      }
+
+      &:not(:placeholder-shown) {
+        & + label {
+          color: settings.$error-red;
+        }
+      }
+    }
+
+    .form__input {
+      border-color: settings.$error-red;
+    }
+  }
+
+  label.placeholder-text {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: fit-content;
+    margin: auto;
+    margin-right: 2rem;
+    transition: all 0.2s ease-in-out;
+    pointer-events: none;
+    width: fit-content;
+  }
+}
+
+.form__input {
+  height: 4rem;
+  border-radius: 10rem;
+  border: 1px solid settings.$grey;
+  padding: 0 2.3rem;
+  font-family: settings.$font_main;
+  transition: 0.3s all;
+  width: 23rem;
+  text-align: right;
+
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  & ~ button.clearInput.show {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &:focus {
+    border-color: settings.$medium-blue;
+    outline: none;
+
+    & ~ button.clearInput.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    & + label {
+      top: -4rem;
+      font-size: 1.2rem;
+      color: settings.$medium-blue;
+      background-color: white;
+      width: fit-content;
+      text-align: right;
+      padding: 0 0.5rem;
+    }
+  }
+
+  &:not(:placeholder-shown) {
+    + label {
+      top: -4rem;
+      font-size: 1.2rem;
+      background-color: white;
+      text-align: right;
+      padding: 0 0.5rem;
+    }
+  }
+}
+
+.form__button__wrapper {
+  position: relative;
+
+  .basic-button {
+    margin-top: 1rem;
+  }
+
+  .form__input__errors {
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    top: -1rem;
+  }
+}
+
+button.clearInput {
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s all;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 100%;
+  background-color: lighten(settings.$light-grey, 5%) !important;
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: 1.2rem;
+  // inset: 0 auto 0 1.2rem;
+  margin: auto;
+  position: absolute;
+  background: url("../assets/form/x.svg") no-repeat center;
+  background-size: 1.2rem;
+  cursor: pointer;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.reCaptcha {
+  position: relative;
+  width: max-content;
+  margin: auto;
+
+  div {
+    width: max-content;
+    margin: auto;
+    div {
+      width: max-content;
+    }
+  }
+
+  .form__input__errors {
+    position: absolute;
+    right: 0;
+    bottom: -1.6rem;
+  }
+}
+
+.login__logos {
+  position: flex;
+  align-items: center;
+  position: absolute;
+  bottom: -5rem;
+
+  img {
+    width: auto;
+    height: 2.304rem;
+    margin-left: 1rem;
+
+    &:last-child {
+      margin-left: 0;
+    }
+  }
+}
+
+//Mobile
+
+@media screen and (max-width: 1023px) {
+  .form {
+    row-gap: 3rem;
+  }
+
+  .form__button__wrapper {
+    .basic-button {
+      margin-top: -1rem;
+    }
+  }
+
+  .login__logos {
+    display: none;
+  }
+}

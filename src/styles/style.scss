@@ -1,0 +1,24 @@
+@use "base/settings";
+@use "base/base";
+@use "base/queries";
+@use "./components/header";
+@use "./components/dashboard";
+@use "./components/dashboard/card";
+@use "./components/filter-dropdown";   
+@use "./components/dashboard/pie_graph";   
+@use "./components/dashboard/area-graph";   
+@use "./components/dashboard/simple_bar-graph";  
+@use "./components/dashboard/tiny_bar-graph";  
+@use "./components/dashboard/funnel-chart"; 
+@use "./components/inquiries";
+@use "./components/inquiries/single";
+@use "./components/inquiries/list";
+@use "./components/inquiries/menu";
+@use "./components/inquiries/chat";
+@use "./components/inquiries/basic-button";
+@use "./components/inquiries/chat/messages";
+@use "./components/inquiries/chat/inquiry-header";
+@use "./components/inquiries/chat/input";
+@use "./components/login";
+
+

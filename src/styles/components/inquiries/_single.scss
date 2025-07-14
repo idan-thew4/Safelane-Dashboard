@@ -1,0 +1,234 @@
+@use "../../base/base.scss";
+@use "../../base/settings.scss";
+
+#panel\:r0\: {
+
+    $action-colors: settings.$error-red, settings.$green;
+
+
+    @for $i from 1 through length($action-colors) {
+
+        $currentColor: nth($action-colors, $i);
+        
+        @keyframes animate-delete-#{$i} {
+            0% {
+                background-color: white;
+            }
+            50% {
+                background-color: lighten($currentColor, 50%);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        &#{$i - 1} {
+
+            .list-grid {
+
+                &.animate-delete {
+                    animation: animate-delete-#{$i} .5s;
+                }
+            }
+
+        }
+
+    }
+}
+
+
+
+
+.list-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 13%) 30% repeat(2, 16%) 10% 2%;
+    height: 6.5rem;
+    align-items: center;
+    padding: 0 2rem;
+    background-color: white;
+    transition: .3s all;
+    opacity: 1;
+
+
+
+
+
+    &.header {
+        border-bottom: 0.1rem solid lighten(settings.$grey, 40%);
+        box-shadow: 0px 7px 15px 0px rgba(0, 0, 0, 0.03);
+        border-radius: 3rem 3rem 0 0;
+
+        li:nth-child(4) {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            &:after {
+                content: '';
+                width: 1.5rem;
+                height: 1.5rem;
+                background-size: 1.5rem;
+                background: url('../assets/arrow-down_with-tip.svg') no-repeat center;
+                display: block;
+            }
+
+        }
+    }
+
+    &:not(.header) {
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+            background-color: lighten(settings.$purple, 45%);
+        }
+    }
+
+
+
+
+
+
+    li.more {
+        height: 100%;
+        position: relative;
+
+        .more-button {
+            height: 100%;
+            width: 100%;
+            background: url('../assets/more-icon.svg') no-repeat center;
+            background-size: auto;
+            cursor: pointer;
+        }
+
+        .move-inquiry-button {
+            background: white;
+            position: absolute;
+            left: -1rem;
+            text-wrap: nowrap;
+            padding: 1.5rem 2rem;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
+            border-radius: 1.2rem;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: .3s all;
+            top: 0.5rem;
+            cursor: pointer;
+
+            &.active {
+                opacity: 1;
+                visibility: visible;
+
+            }
+
+
+
+            &:before {
+                width: 2.4rem;
+                height: 2.4rem;
+                display: block;
+                content: '';
+                background-size: 2.4rem;
+            }
+
+            $moveButtonTypes: 'move-to-archive', 'back-to-opened';
+
+            @for $i from 1 through length($moveButtonTypes) {
+
+                &.#{nth($moveButtonTypes, $i)}:before {
+                    background: url('../assets/icons/inquiries_list_single_#{nth($moveButtonTypes, $i)}_icon.svg') no-repeat center
+                }
+
+            }
+
+
+
+            &.move-to-archive {}
+        }
+
+
+
+
+    }
+
+    @keyframes animate-in {
+
+        0% {
+            opacity: 0;
+
+        }
+
+        100% {
+            opacity: 1;
+
+
+        }
+    }
+
+
+    li {
+        opacity: 1;
+        transition: .3s;
+
+        &.animate {
+
+            &-out {
+                opacity: 0;
+            }
+
+            @keyframes animate-in {
+
+                0% {
+                    opacity: 0;
+
+                }
+
+                100% {
+                    opacity: 1;
+
+                }
+
+            }
+
+            &-in {
+                animation-name: animate-in;
+                animation-duration: .3s;
+
+            }
+
+
+
+        }
+    }
+
+
+
+}
+
+
+$tags: 'orange', 'red', 'green';
+
+.inquiry__single {
+    font-weight: 900;
+    color: white;
+    font-size: 1.4rem;
+    padding: 0.2rem 1rem;
+    border-radius: 30rem;
+
+    @for $i from 1 through length($tags) {
+        &.#{nth($tags, $i)} {
+            background: nth(settings.$pie_chart_colors, $i);
+        }
+    }
+}
+
+.search-keys {
+    color: settings.$blue;
+    font-weight: 700;
+
+}

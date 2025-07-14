@@ -1,0 +1,35 @@
+@use "../../../base/base.scss";
+@use "../../../base/settings.scss";
+
+.inquiry__header {
+    padding: 2.5rem;
+    z-index: 1;
+    box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.10);
+    position: relative;
+}
+
+.inquiry__header-top, .inquiry__header__action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inquiry__header-top {
+    
+    .head_24 {
+        color: settings.$purple;
+        margin-bottom: 1rem;
+    }
+
+}
+
+.inquiry__header__action { 
+    gap: 1.5rem;
+}
+
+.inquiry__header-info {
+    display: flex;
+    gap:1rem;
+    align-items: center;
+}
+

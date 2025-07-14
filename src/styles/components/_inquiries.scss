@@ -1,0 +1,43 @@
+@use "../base/settings.scss";
+@use "../base/base.scss";
+
+.inquiries__container {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+        content: '';
+        position: absolute;
+        width: 20%;
+        height: 100%;
+        background-color: settings.$light-grey;
+        top:0;
+        right: 0;
+    }
+
+}
+
+
+.inquiries__grid {
+    display: grid;
+    grid-template-columns: 60% 40%;
+}
+
+.inquiries__menu {
+    display: grid;
+    grid-template-columns: 50% 1fr;
+    gap: 2.5rem;
+}
+
+.inquiries__filters {
+    display: flex;
+    gap: 0.8rem
+
+}
+
+
+
+
+
+

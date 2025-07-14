@@ -1,0 +1,97 @@
+@use "../../base/base.scss";
+@use "../../base/settings.scss";
+
+.chart {
+
+    &.horizontal {
+      padding: 3rem 3.5rem 3rem 2rem;
+  
+      .card__head {
+        padding: 0 0.5rem 0 2.2rem;
+      }
+  
+    }
+  
+  
+    .card__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+  }
+  
+  .recharts {
+  
+    &-grid {
+  
+      &-vertical {
+        display: none;
+      }
+    }
+  
+    &-cartesian {
+  
+      &-axis-ticks {
+        font-size: 1.3rem;
+      }
+  
+      &-grid {
+  
+        &-vertical {
+          display: none;
+        }
+  
+        &-horizontal {
+          line {
+            stroke: settings.$light-grey;
+          }
+        }
+      }
+  
+    }
+  
+    &-tooltip {
+      &-wrapper {
+        transition: none !important;
+      }
+  
+    }
+  
+  }
+
+.avg-response {
+    grid-column: 2/4;
+
+
+    .recharts {
+
+            &-layer {
+
+                path {
+                    &:last-of-type {
+                        stroke: settings.$dark-blue;
+                        stroke-width: 0.2rem;
+                    }
+                }
+
+        }
+
+        &-active-dot {
+
+            circle {
+                stroke-width: 5;
+                stroke: settings.$grey;
+                fill: settings.$grey;
+            }
+        }
+
+
+
+    }
+
+
+
+
+
+}

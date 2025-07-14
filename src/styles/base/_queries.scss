@@ -1,0 +1,44 @@
+@use './settings';
+@use './base';
+
+
+@media only screen and (min-width: 1921px) {
+    html{
+      font-size: 12px;
+    }
+  }
+
+  @media only screen and (min-width: 1701px) {
+    html{
+      font-size: 11px;
+    }
+  }
+  
+  @media only screen and (min-width: 1521px) and (max-width: 1700px){
+    html{
+      font-size: 10px;
+    }
+  }
+  
+  @media only screen and (min-width: 1432px) and (max-width: 1520px){
+    html{
+      font-size: 9px;
+    }
+  }
+  
+  @media only screen and (min-width: 1024px) and (max-width: 1431px) {
+  
+    html{
+      font-size: 8px;
+    }
+  }
+  
+  //mobile
+  @media only screen and (max-width: 1023px) {
+  
+    html{
+      font-size: 8px;
+    }
+  
+  }
+  

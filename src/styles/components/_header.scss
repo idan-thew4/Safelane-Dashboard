@@ -1,0 +1,209 @@
+@use "../base/settings.scss";
+@use "../base/base.scss";
+
+
+header {
+  height: 6rem;
+  background: white;
+  box-shadow: 0 0.4rem 2rem 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  z-index: 3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+
+  .basic-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+
+    .header__menu {
+      display: flex;
+      align-items: center;
+      gap:3rem;
+      height: 100%;
+
+
+    }
+  }
+
+
+}
+
+ul.menu {
+
+ font: 2rem settings.$font_secondary;
+ display: flex;
+ gap:1rem;
+ height: 100%;
+
+ li {
+
+  a {
+    color: settings.$grey;
+    text-decoration: none;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 0 2rem;
+    border-bottom: 0.3rem solid white;
+    height: 100%;
+    box-sizing: border-box;
+    transition: .3s all;
+    font-weight: 700;
+
+
+    &:before {
+      content: '';
+      width: 2.2rem;
+      height: 2.2rem;
+      background-size: 2.2rem;
+      display: block;
+      background-size: 2.2rem;
+    }
+  }
+
+
+
+  $menu_items: dashboard, inquiries;
+
+  @for $i from 1 through length($menu_items) {
+
+    &:nth-child(#{$i}) {
+      a:before {
+        background: url('../assets/icons/#{nth($menu_items, $i)}_disabled.svg');
+        background-size: 2.2rem;
+
+      }
+    }
+
+    &:has(.active):nth-child(#{$i}) a, &:nth-child(#{$i}) a:hover{
+      border-color: settings.$purple;
+      color: settings.$purple;
+
+
+      &:before {
+        background: url('../assets/icons/#{nth($menu_items, $i)}_enabled.svg');
+        background-size: 2.2rem;
+
+      }
+
+    }
+    
+    a:hover {
+      color: settings.$purple;
+    }
+
+  }
+
+
+
+
+ }
+
+
+}
+
+.header__header-user {
+  display: flex;
+  gap:1rem;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+  min-width: 12rem;
+  justify-content: flex-end;
+
+
+      &.show {
+
+        .header__header-user-dropdown {
+        opacity: 1;
+      }
+
+      > button {
+  
+        &:after {
+          transform: rotate(180deg);
+
+        }
+
+      }
+
+
+
+    }
+
+
+
+  img {
+    border-radius: 100%;
+    width: 3rem;
+    height: 3rem;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  > button {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    cursor: pointer;
+
+
+
+
+    &:after {
+      content: '';
+      background: url('../assets/arrow-down.svg') no-repeat center;
+      width: 1.3rem;
+      height: 1.3rem;
+      background-size: 1.3rem;
+      display: block;
+      transform: rotate(0deg);
+      transition: .3s all;
+
+
+    }
+  }
+
+  &-dropdown {
+    position: absolute;
+    padding: 1.5rem 1rem 1.5rem 1.5rem;
+    background: white;
+    box-shadow: 0 1rem 2.2rem 0 rgba(0, 0, 0, 0.08);
+    border-radius: 1rem;
+    left: 0;
+    top: 4.7rem;
+    width: 100%;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: .3s all;
+    cursor: pointer;
+
+
+    button {
+      font-weight: 500;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      cursor: pointer;
+
+  
+
+      &:before {
+        content: '';
+        background: url('../assets/icons/logout_icon.svg') no-repeat center;
+        width: 2rem;
+        height: 2rem;
+        background-size: 2rem;
+        display: block;
+      }
+    }
+  }
+
+}

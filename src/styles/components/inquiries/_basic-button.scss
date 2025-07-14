@@ -1,0 +1,144 @@
+@use "../../base/base.scss";
+@use "../../base/settings.scss";
+
+
+.basic-button {
+    background-color: settings.$purple;
+    border-radius: 3.8rem;
+    height: 3.7rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: white;
+    width: fit-content;
+    padding: 0 2rem;
+    margin: auto;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: .3s all;
+
+    &.secondary {
+        background-color: transparent;
+        color: settings.$purple;
+        border: 0.1rem solid settings.$purple;
+
+        &:hover {
+            background-color: white;
+            color: lighten(settings.$purple, 20%);
+            border: 0.1rem solid lighten(settings.$purple, 20%);
+        }
+    }
+
+    &:hover {
+        background-color: darken(settings.$purple, 20%);
+        cursor: pointer;
+    }
+
+    &:disabled, &.disabled {
+        background-color: lighten(settings.$purple, 20%);
+        cursor: auto;
+    }
+
+    &.button-small {
+        font-size: 1.4rem;
+        padding: 0 2rem;
+    }
+
+    &.with-icon {
+
+        gap: 1rem;
+        
+        &:before {
+            content: '';
+        }
+
+        &.export-icon:before {
+            background: url('../assets/chat/exportIcon.svg') no-repeat center;
+            width: 1.6rem;
+            height: 1.6rem;
+            background-size: 1.6rem;
+        }
+
+    }
+
+    &.white-button{
+        background: white;
+        color: settings.$dark-grey;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+        margin: 0;
+        transition: .3s all;
+        white-space: nowrap;
+
+        &:hover:not(.input__form-textarea) {
+            background: settings.$very-light-blue;
+        }
+        
+
+        &.on-bg {
+            box-shadow: none;
+            font-weight: 400;
+
+            &:hover {
+                background: white;
+            }
+
+        }
+    }
+
+    &.dropdown-button {
+        font-weight: 300;
+        gap: 0.5rem;
+        min-width: 13.4rem;
+        height: 4.4rem; 
+        justify-content: center;
+        border: 0.1rem solid transparent;
+        transition: .3s all;
+
+
+        &:after {
+            content: '';
+            background: url('../assets/arrow-down.svg') no-repeat center;
+            width: 1rem;
+            height: 1rem;
+            background-size: 1rem;
+            display: block;        
+        
+        }
+        
+        &.active {
+            background: settings.$very-light-blue;
+            border: 0.1rem solid settings.$purple;
+        }
+
+
+        &.selected {
+            background:settings.$purple;
+            color: white;
+
+            &:after {
+            background: url('../assets/arrow-down_white.svg') no-repeat center;
+            background-size: 1rem;
+
+            }
+
+            &.active, &:hover {
+                background:settings.$purple;
+                color: white;    
+            }
+        }
+
+    }
+
+    &.blue-button {
+        background-color: settings.$blue;
+        padding: 0px 8rem;
+
+        &:hover {
+            background-color: darken(settings.$blue, 20%);
+            cursor: pointer;
+        }
+
+    }
+
+
+}

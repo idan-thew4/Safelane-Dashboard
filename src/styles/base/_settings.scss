@@ -1,0 +1,48 @@
+//Typography
+
+@mixin font-face($family, $src, $weight, $style) {
+    @font-face {
+      font-family: $family;
+      src: url($src);
+      font-weight: $weight;
+      font-style: $style;
+  
+    }
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Miriam+Libre:wght@400;700&display=swap');
+
+  $font_main: 'Heebo', sans-serif;;
+  $font_secondary: 'Miriam Libre', sans-serif;
+
+  //----Colors----//
+
+$dark-grey: #303030;
+$grey:  #838383;
+$green: #20CB79;
+$green_good: #199848;
+$red: #FF5C5C;
+$red_bad: #C52222;
+$orange: #FF835C;
+$dark-blue: #26318F;
+$blue: #1A8AFF;
+$very-light-blue: #F0F3FC;
+$purple: #444FB2;
+
+$medium-blue: #1A8AFF;
+$hover-blue: #006DD8;
+$grey: #726F6F;
+$mid-grey: #B6BCC8;
+$light-grey: #D9D9D9;
+$bg-grey: #F7F7F9;
+$error-red: #D4042A;
+
+
+
+//Pie charts
+$pie_chart_colors: $orange,  $red, $green;
+
+//Bar Graph
+$bar_chart_color: $dark-blue,$blue;
+
+

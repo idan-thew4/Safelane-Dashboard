@@ -1,0 +1,68 @@
+@use "../../../base/base.scss";
+@use "../../../base/settings.scss";
+
+.input {
+    flex: 0 0 15.9rem;
+    padding: 2rem;
+    box-shadow: 0px -10px 15px 0px rgba(0, 0, 0, 0.05);
+    z-index: 9;
+
+    .basic-button:not(.white-button) {
+        flex: 0 0 11.6rem;
+        margin: 0;
+        justify-content: center;
+    
+    }
+
+}
+
+.input__form {
+    display: flex;
+    gap: 1rem;
+}
+
+
+.input__action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+
+}
+
+.input__textarea-wrapper {
+    flex-grow: 1;
+
+
+    .input__form-textarea {
+        border:none;
+        outline:none;
+        resize: none;
+        font-family: settings.$font_main;
+        font-weight: 400;
+        padding: 0.7rem 0 0 0 ;
+        box-sizing: border-box;
+        overflow-y: auto;
+        background: none;
+        box-shadow:none;
+        width: 100%;
+    
+    
+        &::-webkit-scrollbar {
+            width: 0.5rem;
+    
+    
+        }
+    
+    
+        &::-webkit-scrollbar-thumb {
+            background: settings.$mid-grey;
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+    }
+
+} 
+
+
+

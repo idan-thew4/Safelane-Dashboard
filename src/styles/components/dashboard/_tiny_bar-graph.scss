@@ -1,0 +1,17 @@
+@use "../../base/base.scss";
+@use "../../base/settings.scss";
+
+
+.texting-per-inquiries {
+
+    grid-column: 1/2;
+
+    @media only screen and (max-width: 1280px) {
+        grid-column: 1/3;
+
+
+        &.card.chart {
+            order: 3;
+        }
+    }
+}

@@ -1,0 +1,254 @@
+@use 'settings';
+
+// ----- General ----- //
+
+html {
+  font-size: 10px;
+}
+
+body,
+p {
+  margin: 0;
+  font-family: settings.$font_main;
+  letter-spacing: -0.017rem;
+  color: settings.$dark-grey;
+}
+
+@for $i from 1 through 5 {
+  h#{$i} {
+    margin: 0;
+  }
+}
+
+button {
+  border: none;
+  background: none;
+  font-family: settings.$font_main;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+//Layout
+
+.basic-grid {
+  max-width: calc(127rem + 6%);
+  padding: 0 3%;
+  margin: auto;
+}
+
+
+// Typography
+
+.head {
+
+  &_30 {
+    font-family: settings.$font_secondary;
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  &_24 {
+    font-size: 2.4rem;
+    font-weight: 500;
+
+    &_secondary {
+      font-family: settings.$font_secondary;
+      font-weight: 700;
+      font-size: 2.4rem;
+
+    }
+  }
+
+  &_18 {
+    font-size: 1.8rem;
+    font-weight: 500;
+
+    &_secondary {
+      font-family: settings.$font_secondary;
+      font-weight: 400;
+      font-size: 1.8rem;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+
+  }
+
+}
+
+.parag {
+
+  &_18 {
+    font-size: 1.8rem;
+    font-weight: 300;
+
+
+  }
+
+  &_16 {
+    font-size: 1.6rem;
+    font-weight: 500;
+
+    &.light,
+    .light {
+      font-weight: 400;
+    }
+
+    &.bold {
+      font-weight: 700;
+    }
+  }
+
+  &_14 {
+    font-family: settings.$font_secondary;
+    font-size: 1.4rem;
+    font-weight: 700;
+
+    &_main {
+      font-family: settings.$font_main;
+      font-size: 1.4rem;
+      font-weight: 400;
+
+      strong {
+        font-weight: 700;
+      }
+    }
+  }
+
+  &_13 {
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 169.231%;
+  }
+
+  &_12 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 166.667%
+  }
+
+
+}
+
+.num {
+
+  &_30 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 100%;
+  }
+
+  &_22 {
+    font-family: settings.$font_main;
+    font-size: 2.2rem;
+    font-weight: 700;
+  }
+
+  &_20 {
+    font-family: settings.$font_secondary;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}
+
+.caption {
+
+  &_14 {
+    font-family: settings.$font_main;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: settings.$grey;
+  }
+
+}
+
+tspan {
+  text-transform: capitalize;
+}
+
+// ----- Data ----- //
+
+//Typo
+.dv {
+
+  &_sub-title {
+    color: settings.$grey;
+
+    &:not(.double .dv_sub-title) {
+      text-align: center;
+
+    }
+  }
+
+  &_total {
+    color: lighten(settings.$grey, 20%);
+    font-weight: 400;
+  }
+
+  &_tooltip {
+    text-align: center;
+    background-color: white;
+    padding: 1rem;
+    stroke-width: 0.1rem;
+    border: 0.1rem solid settings.$light-grey;
+    filter: drop-shadow(0px 44px 44px rgba(0, 0, 0, 0.08));
+    border-radius: 1rem;
+    position: relative;
+    z-index: 20;
+
+
+    &:after {
+      content: '';
+      background: url('../assets/tool-tip_arrow-down.svg') no-repeat center;
+      width: 2rem;
+      // background-color: red;
+      height: 1.4rem;
+      background-size: 2rem;
+      position: absolute;
+      inset: auto 0 -1rem 0;
+      margin: auto;
+      z-index: 10;
+    }
+
+    .parag_12 {
+      color: settings.$grey;
+    }
+  }
+}
+
+
+// ----- Elements ----- //
+
+.loader__wrapper {
+  position: relative;
+  // z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;  
+
+
+  &.full-screen {
+    width: 100vw;
+    height: 100vh;
+    background: white;
+  }
+
+  &.filter {
+    height: 80%;  
+  }
+
+
+
+  img {
+    width: 10rem;
+  }
+}

@@ -1,0 +1,141 @@
+@use "../../base/base.scss";
+@use "../../base/settings.scss";
+
+.funnel-chart {
+  .card__data {
+    height: 80%;
+  }
+}
+
+.funnel-chart__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  li {
+    &.polygon {
+      display: grid;
+      grid-template-columns: 35% 1fr;
+      gap: 2rem;
+      height: 6.5rem;
+    }
+
+    &.rectangle {
+      height: 8.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 2rem;
+      border-radius: 7px;
+
+      .funnel-chart__number {
+        justify-content: space-between;
+      }
+    }
+
+    @for $i from 1 through 4 {
+      &:nth-child(#{5 - $i}) {
+        .funnel-chart__total-percentage,
+        &:not(.polygon) {
+          background-color: darken(lighten(settings.$blue, 70%), $i * 5%);
+
+          svg {
+            fill: darken(lighten(settings.$blue, 70%), $i * 5%);
+          }
+        }
+
+        .funnel-chart__total-percentage {
+          width: #{$i * 18%};
+
+          @media only screen and (max-width: 1280px) {
+            width: #{$i * 22%};
+          }
+        }
+
+        &:not(.polygon) {
+          width: #{$i * 20%};
+        }
+      }
+    }
+  }
+}
+
+.funnel-chart__calc {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+}
+
+.funnel-chart__number {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.funnel-chart__number {
+  .percentage_num {
+    background-color: settings.$light-grey;
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.2rem 0.6rem;
+    box-sizing: border-box;
+    border-radius: 30rem;
+    line-height: 143%;
+    align-items: center;
+
+    &:after {
+      content: "";
+      width: 1.6rem;
+      height: 1.6rem;
+      display: block;
+      background-size: 1.6rem;
+    }
+
+    &.arrow {
+      &-none {
+        display: none;
+      }
+
+      &-up {
+        color: settings.$green_good;
+
+        &:after {
+          background: url("../assets/arrow-point_up.svg") no-repeat center;
+        }
+      }
+
+      &-down {
+        color: settings.$red_bad;
+
+        &:after {
+          background: url("../assets/arrow-point_down.svg") no-repeat center;
+        }
+      }
+    }
+  }
+
+  span {
+    padding-right: 0.5rem;
+  }
+}
+
+.funnel-chart__total-percentage {
+  display: flex;
+  align-items: center;
+  padding-right: 1.6rem;
+  border-radius: 0 7px 7px 0;
+  position: relative;
+
+  .num_20 {
+    z-index: 1;
+  }
+
+  svg {
+    position: absolute;
+    width: 4.45rem;
+    height: 100%;
+    left: -4.15rem;
+  }
+}
