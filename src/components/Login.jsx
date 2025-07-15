@@ -28,14 +28,6 @@ const Login = () => {
 
   }
 
-  useEffect(() => {
-
-    console.log(reCaptchaError);
-
-
-  }, [reCaptchaError])
-
-
   const {
     register,
     handleSubmit,
@@ -76,7 +68,7 @@ const Login = () => {
 
       (async () => {
         try {
-          const response = await fetch(`${window.location.protocol}/${window.location.hostname}/reCaptcha.php?token=${grecaptcha.getResponse()}`, {
+          const response = await fetch(`${window.location.protocol}//${window.location.hostname}/reCaptcha.php?token=${grecaptcha.getResponse()}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -126,7 +118,7 @@ const Login = () => {
       });
     }
 
-    dashboardLogin();
+
 
 
 

@@ -9,18 +9,14 @@ import loader from "../../assets/loader.svg";
 
 
 const Chat = () => {
-    const { ticketData,chatLoader, setChatLoader  } = useStore();
+    const { ticketData, chatLoader, setChatLoader } = useStore();
 
-    useEffect(()=>{
 
-        console.log(chatLoader)
 
-    }, [chatLoader])
-
-    if(chatLoader) {
+    if (chatLoader) {
         return <div className="loader__wrapper">
-        <img src={loader}/>
-    </div>;
+            <img src={loader} />
+        </div>;
 
     }
 
@@ -41,15 +37,15 @@ const Chat = () => {
 
     return (
         <div className="inquiry__chat-full">
-            <InquiryHeader 
-            id = {ticketData.ticket_id}
+            <InquiryHeader
+                id={ticketData.ticket_id}
             />
             <Messages
-            id = {ticketData.ticket_id}
-            content={ticketData.chat}
+                id={ticketData.ticket_id}
+                content={ticketData.chat}
             />
-            <Input type={'waiting-time'}/>
-            
+            <Input type={'waiting-time'} />
+
         </div>
 
     )

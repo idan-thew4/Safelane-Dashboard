@@ -22,7 +22,6 @@ const Messages = ({ id, content }) => {
     const StripTag = useRef();
     const [stripTag, setStripTag] = useState();
     let currentDate = '';
-    const [representativeReplay, setRepresentativeReply] = useState(false);
 
 
 
@@ -146,7 +145,7 @@ const Messages = ({ id, content }) => {
             case 'admin':
                 return <p className="parag_13 message__context">{messages[messageType][1]}</p>;
             case 'tag-strip':
-                return <div className="action-bar">
+                return <div className="action-bar tagged">
                     <p className="parag_16 ">אופי הפניה תויג כ<strong >{tagging[messages[messageType][1]].copy}</strong>
                         <span className="light">{getTimeStamp(new Date().getTime(), true)}</span>
                     </p>
@@ -247,16 +246,18 @@ const Messages = ({ id, content }) => {
                             </>
                     }
                 })}
-                {representativeReplay
+                {tag === ''
                     ?
-                    <li className="tag-strip fixed">
+                    <li className="tag-strip fixed" ref={StripTag}>
                         <div className="action-bar">
                             <p className="parag_16">תיוג הפניה</p>
-                            {tagging.map((button, key) => {
-                                return (
-                                    <button key={key} className="basic-button white-button on-bg" onClick={() => updateTag(button.tagging)}>{button.copy}</button>
-                                )
-                            })}
+                            <div className="tagging-buttons">
+                                {tagging.map((button, key) => {
+                                    return (
+                                        <button key={key} className="basic-button white-button on-bg" onClick={() => updateTag(button.tagging)}>{button.copy}</button>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </li>
                     : null

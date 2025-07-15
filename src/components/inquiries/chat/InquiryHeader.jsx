@@ -65,7 +65,7 @@ const InquiryHeader = ({ id }) => {
                         onChange={(setNewTag) => changeTag(ticketData['wp-ticket-id'], setNewTag)}
                     />}
 
-                    <a href={`www.lettersontheway.com/ticket/dashboard/${currentItem.ticket_id}/${currentItem.car_number}`} className="basic-button with-icon export-icon" target="_blank">לצפייה בדיווח</a>
+                    <a href={`https://www.lettersontheway.com/ticket/dashboard/${currentItem.ticket_id}/${currentItem.car_number}`} className="basic-button with-icon export-icon" target="_blank">לצפייה בדיווח</a>
                 </div>
             </div>
             <div className="inquiry__header-info">

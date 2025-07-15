@@ -27,6 +27,7 @@ const Filter = ({ type, copy }) => {
   const [filtersCopy, setFiltersCopy] = useState();
   const [selectedFiltersCount, setSelectedFiltersCount] = useState();
   const [datePickerStatus, setDatePickerStatus] = useState(false);
+  const [filterSelected, setFilterSelected] = useState(false);
   const checkboxRefs = useRef([]);
 
 
@@ -143,68 +144,75 @@ const Filter = ({ type, copy }) => {
 
   return (
     <div className="dropdown">
-      <div className={`dropdown__filter-count ${selectedFiltersCount > 0 ? 'selected' : ''}`}>
+      <div className={`dropdown__filter-count ${selectedFiltersCount > 0 && filterSelected ? 'selected' : ''}`}>
         {selectedFiltersCount > 0 ? selectedFiltersCount : null}
       </div>
       <div className="dropdown__filters-count"></div>
       <button
-        className={`basic-button white-button dropdown-button ${activeFilter === type ? 'active' : ''} ${selectedFiltersCount > 0 ? 'selected' : ''}`}
+        className={`basic-button white-button dropdown-button ${activeFilter === type ? 'active' : ''} ${selectedFiltersCount > 0 && filterSelected ? 'selected' : ''}`}
         onClick={() => setActiveFilter(type)}>{copy}</button>
       <div
         className={`filter-dropdown__menu inquiry-filter ${activeFilter === type ? 'open' : ''} ${type}`}
       >
-        {options
-          ?
-          Object.keys(options).map((option, key) => {
-            checkboxRefs[key] = React.createRef()
-            return (
-              <div key={key} className={`dropdown__selection ${type} ${type === 'inquiry-type' ? options[option].count === 0 ? 'disabled' : '' : options[option] === 0 ? 'disabled' : ''}`}>
-                <input
-                  name={type === 'referral-date' ? 'radioGroup' : null}
-                  id={type === 'inquiry-type' ? options[key].id : option}
-                  type={type === 'referral-date' ? 'radio' : 'checkbox'}
-                  onClick={(e) => { getChecked(e, type), setDatePickerStatus(false) }}
-                  ref={checkboxRefs[key]}
-                  disabled={type === 'inquiry-type' ? options[option].count === 0 ? true : false : options[option] === 0 ? true : false}
-                />
+        <div className="filters-container">
+          {options
+            ?
+            Object.keys(options).map((option, key) => {
+              checkboxRefs[key] = React.createRef()
+              return (
+                <div key={key} className={`dropdown__selection ${type} ${type === 'inquiry-type' ? options[option].count === 0 ? 'disabled' : '' : options[option] === 0 ? 'disabled' : ''}`}>
+                  <input
+                    name={type === 'referral-date' ? 'radioGroup' : null}
+                    id={type === 'inquiry-type' ? options[key].id : option}
+                    type={type === 'referral-date' ? 'radio' : 'checkbox'}
+                    onClick={(e) => { getChecked(e, type), setDatePickerStatus(false) }}
+                    ref={checkboxRefs[key]}
+                    disabled={type === 'inquiry-type' ? options[option].count === 0 ? true : false : options[option] === 0 ? true : false}
+                  />
 
-                <label className={type === 'inquiry-type' ? options[key].id : option} htmlFor={type === 'inquiry-type' ? options[key].id : option}>
-                  <div className={`dropdown__content`}>
-                    <span className="parag_14 query">{type === 'inquiry-type' ? options[key].name : filtersCopy[option]}</span>
-                    <span className="parag_12 count">{type === 'inquiry-type' ? options[key].count : options[option]}</span>
-                  </div>
-                </label>
-              </div>
-            )
-          }) : null
-        }
-        {type === 'referral-date' &&
-          <div className={`dropdown__selection ${type}`}>
-            <input
-              name='radioGroup'
-              id='datePicker'
-              type='radio'
-              onClick={
-                () => { setDatePickerStatus(true); setSelectedFiltersCount(1) }}
-              ref={datePickerRef}
+                  <label className={type === 'inquiry-type' ? options[key].id : option} htmlFor={type === 'inquiry-type' ? options[key].id : option}>
+                    <div className={`dropdown__content`}>
+                      <span className="parag_14 query">{type === 'inquiry-type' ? options[key].name : filtersCopy[option]}</span>
+                      <span className="parag_12 count">{type === 'inquiry-type' ? options[key].count : options[option]}</span>
+                    </div>
+                  </label>
+                </div>
+              )
+            }) : null
+          }
+          {type === 'referral-date' &&
+            <div className={`dropdown__selection ${type}`}>
+              <input
+                name='radioGroup'
+                id='datePicker'
+                type='radio'
+                onClick={
+                  () => { setDatePickerStatus(true); setSelectedFiltersCount(1) }}
+                ref={datePickerRef}
 
-            />
-            <label htmlFor='datePicker'>
-              {/* <div className={`dropdown__content`}> */}
-              <span className="parag_14 query">טווח תאריכים</span>
-              {datePickerStatus && <Datepicker />}
-              {/* </div> */}
-            </label>
-          </div>
-        }
+              />
+              <label htmlFor='datePicker'>
+                {/* <div className={`dropdown__content`}> */}
+                <span className="parag_14 query">טווח תאריכים</span>
+                {datePickerStatus && <Datepicker />}
+                {/* </div> */}
+              </label>
+            </div>
+          }
+        </div>
         <div className="dropdown__buttons">
           <button
             className="basic-button"
-            onClick={() => { getQueriedData(), setActiveFilter() }}>סינון
+            onClick={() => {
+              getQueriedData(), setActiveFilter(),
+                setFilterSelected(true)
+            }}>סינון
           </button>
           <button
             className={`basic-button white-button on-bg ${selectedFiltersCount > 0 ? '' : 'disabled'}`}
-            onClick={() => { resetQuery(); setActiveFilter() }}
+            onClick={() => {
+              resetQuery(); setActiveFilter(), setFilterSelected(false)
+            }}
           >איפוס
           </button>
         </div>

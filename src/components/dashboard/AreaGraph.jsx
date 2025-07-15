@@ -46,11 +46,12 @@ const AreaGraph = ({ type, title, data }) => {
         if (active && payload && payload.length) {
             return (
                 <div className="dv_tooltip" ref={toolTip}>
-                    <p className="parag_12">{`${filterChoice === 'monthly' ?  `${label}/` : toolTipLabel[label]} ${period}`}</p>
+                    {/* <p className="parag_12">{`${filterChoice === 'monthly' ? `${label}/` : toolTipLabel[label]} ${period}`}</p> */}
+                    <p className="parag_12">{label}</p>
                     <p className="parag_13">{getDaysAndHours(payload[0].value)}</p>
                 </div>
             );
-        } 
+        }
 
         return null;
     };
