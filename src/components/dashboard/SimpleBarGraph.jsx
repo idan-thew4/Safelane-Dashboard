@@ -13,6 +13,8 @@ const BarGraph = ({ type, title, data, legend }) => {
     let [posData, setposData] = useState({ x: 0 });
     const [toolTipLabel, setToolTipLabel] = useState(months);
 
+    console.log('data', data)
+
 
 
 
@@ -54,11 +56,9 @@ const BarGraph = ({ type, title, data, legend }) => {
                 <>
 
                     <div className="dv_tooltip" ref={toolTip}>
-                        <p className="label parag_12">{`${filterChoice === 'monthly' ? `${label}/` : toolTipLabel[label]} ${period}`}</p>
+                        <p className="label parag_12">{`${filterChoice === 'monthly' ? `${label}` : toolTipLabel[label]} ${period}`}</p>
                         <ul className="dv_legend">
                             {payload.map((item, index) => (
-                                console.log('item', item.value),
-                                console.log('legend', legend[index]),
 
                                 <li key={index} className={item.dataKey} >
 
