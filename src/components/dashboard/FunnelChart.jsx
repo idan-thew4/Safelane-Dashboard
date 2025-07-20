@@ -85,7 +85,12 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
                                     }
                                 </p>
 
-                                <span className={`percentage_num parag_14 arrow-${getChangePercentage(key)[1]}`}>{getChangePercentage(key)[0]}%</span>
+                                {getChangePercentage(key)[0] ?
+                                    <span className={`percentage_num parag_14 arrow-${getChangePercentage(key)[1]}`}>{getChangePercentage(key)[0]}%</span> : null
+
+                                }
+
+
                             </div>
                             <p className="caption_14">{users[key]}</p>
                         </div>

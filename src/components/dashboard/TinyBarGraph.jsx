@@ -24,7 +24,7 @@ const TinyBarGraph = ({ type, title, data }) => {
 
         }, []);
 
-    
+
 
 
 
@@ -79,7 +79,7 @@ const TinyBarGraph = ({ type, title, data }) => {
                     <XAxis
                         type="number"
                         hide
-                        reversed 
+                        reversed
                     />
                 </BarChart>
             </ResponsiveContainer>

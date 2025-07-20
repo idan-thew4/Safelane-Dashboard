@@ -13,7 +13,6 @@ const BarGraph = ({ type, title, data, legend }) => {
     let [posData, setposData] = useState({ x: 0 });
     const [toolTipLabel, setToolTipLabel] = useState(months);
 
-    console.log('data', data)
 
 
 
@@ -99,7 +98,7 @@ const BarGraph = ({ type, title, data, legend }) => {
     return (
         <Card
             title={title}
-            filter={true}
+            filter={false}
             type={type}
             dataType={'chart'}
             change={(choice) => setFilterChoice(choice.value)}
