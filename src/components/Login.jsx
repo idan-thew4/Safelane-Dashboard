@@ -56,42 +56,6 @@ const Login = () => {
 
   const handleLogin = () => {
 
-    const username = values.userName;
-    const password = values.password;
-
-    const data = {
-      username: username,
-      password: password
-    };
-
-    if (grecaptcha.getResponse() !== '') {
-
-      (async () => {
-        try {
-          const response = await fetch(`${window.location.protocol}//${window.location.hostname}/reCaptcha.php?token=${grecaptcha.getResponse()}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-          const data = await response.json();
-          if (data.success) {
-            dashboardLogin();
-
-          } else {
-            setReCaptchaError('נא לנסות שוב')
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      })();
-
-    } else {
-      setReCaptchaError('אנא מלא')
-    }
-
-
-
     const dashboardLogin = () => {
       fetch(`${url}/wp-json/jwt-auth/v1/token`, {
         method: 'POST',
@@ -117,6 +81,53 @@ const Login = () => {
         setSubmitError('אחד או יותר מהפרטים לא נכונים')
       });
     }
+
+    const username = values.userName;
+    const password = values.password;
+
+    const data = {
+      username: username,
+      password: password,
+      recaptcha_token: null
+    };
+
+    if (grecaptcha.getResponse() !== '') {
+
+      // if (data.success) {
+      data.recaptcha_token = grecaptcha.getResponse();
+      dashboardLogin();
+
+      // } else {
+      //   setReCaptchaError('נא לנסות שוב')
+      // }
+
+      // (async () => {
+      //   try {
+      //     const response = await fetch(`${window.location.protocol}//${window.location.hostname}/reCaptcha.php?token=${grecaptcha.getResponse()}`, {
+      //       method: 'POST',
+      //       headers: {
+      //         'Content-Type': 'application/json'
+      //       },
+      //     })
+      //     const data = await response.json();
+      //     if (data.success) {
+      //       dashboardLogin();
+
+      //     } else {
+      //       setReCaptchaError('נא לנסות שוב')
+      //     }
+      //   } catch (error) {
+      //     console.error('Error fetching data:', error);
+      //   }
+      // })();
+
+    } else {
+      setReCaptchaError('אנא מלא')
+    }
+
+
+
+
 
     // dashboardLogin();
 
