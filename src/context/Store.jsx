@@ -231,8 +231,8 @@ const Store = ({ children }) => {
     }];
 
 
-    // const url = 'https://wordpress-1308208-5685135.cloudwaysapps.com/';
-    const url = 'https://cms.lettersontheway.com';
+    const url = 'https://wordpress-1308208-5685135.cloudwaysapps.com/';
+    // const url = 'https://cms.lettersontheway.com';
 
 
 
@@ -281,6 +281,7 @@ const Store = ({ children }) => {
     const sendChatMessage = async (messages) => {
 
         try {
+            console.log('messages-JSON', JSON.stringify(messages))
             const response = await fetch(`${url}/wp-json/safelane-api/dashboard-save-chat-to-server`, {
                 method: 'POST',
                 headers: {
@@ -288,6 +289,7 @@ const Store = ({ children }) => {
                     "authorization": `Bearer ${Cookies.get('authToken')}`,
                 },
                 body: JSON.stringify(messages)
+
             });
             const data = await response.json();
 

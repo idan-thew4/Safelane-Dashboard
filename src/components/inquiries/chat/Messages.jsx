@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useStore } from "../../../Context/Store";
+import React from "react";
 
 const Messages = ({ id, content }) => {
     const {
@@ -231,10 +232,10 @@ const Messages = ({ id, content }) => {
 
 
                         return messages[item][1] === 'sendFormMessage' && messages[item][2] ? null :
-                            <>
+                            <React.Fragment key={item}>
                                 {getTimeStamp(messages[item][0], false, true)}
 
-                                { }
+
 
 
                                 <li className={Object.keys(messages).length > 1 ? `message__single ${item.split('_')[0]}` : `message__single animate ${item.split('_')[0]}`
@@ -243,7 +244,8 @@ const Messages = ({ id, content }) => {
                                         <p className="parag_10 message__time">{getTimeStamp(messages[item][0])}</p>}
                                     {autoReplayMessage(item, messages[item][0], messages[item][2], messages[item][3])}
                                 </li>
-                            </>
+
+                            </React.Fragment>
                     }
                 })}
                 {tag === ''
