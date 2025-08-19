@@ -32,6 +32,7 @@
   box-sizing: border-box;
   margin: auto auto 40% auto;
   border-radius: 1rem;
+  // min-height: 56.7rem;
 
   .head_24 {
     margin-bottom: 5rem;
@@ -49,6 +50,12 @@
   height: auto;
 }
 
+.login__otp-message {
+  text-align: center;
+  color: settings.$grey;
+  margin-bottom: 4rem;
+}
+
 .login__form {
   display: grid;
   row-gap: 4.3rem;
@@ -63,6 +70,7 @@
   position: absolute;
   line-height: 120%;
   bottom: -1.7rem;
+  height: fit-content;
 }
 
 .form__input__wrapper {

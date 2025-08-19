@@ -74,9 +74,10 @@ const Store = ({ children }) => {
         try {
             const response = await fetch(`${url}/wp-json/safelane-api/get-dashboard-data`, {
                 method: 'GET',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    "authorization": `Bearer ${Cookies.get('authToken')}`,
+
 
                 },
 

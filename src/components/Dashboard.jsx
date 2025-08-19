@@ -17,13 +17,12 @@ const Dashboard = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState('');
 
-    useEffect(()=>{console.log(data)}, [data])
 
 
     useEffect(() => {
         getData()
             .then((result) => {
-                setData({components:result.components, firstDate:result.first_date});
+                setData({ components: result.components, firstDate: result.first_date });
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -41,7 +40,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard basic-grid">
             <FilterModal
-            firstDate={data.firstDate}
+                firstDate={data.firstDate}
             />
             <div className="dashboard__header">
                 <h1 className="dashboard__headline head_30">תמונת מצב</h1>

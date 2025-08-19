@@ -17,6 +17,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [reCaptchaError, setReCaptchaError] = useState();
   const { url } = useStore();
+  const [otp, setOtp] = useState(false);
+  const [userId, setUserId] = useState();
 
   //reCaptcha
 
@@ -57,25 +59,45 @@ const Login = () => {
   const handleLogin = () => {
 
     const dashboardLogin = () => {
-      fetch(`${url}/wp-json/jwt-auth/v1/token`, {
+      fetch(`${url}/wp-json/safelane-api/check-user-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Specify the content type as JSON
         },
         body: JSON.stringify(data) // Convert the data object to JSON string
+
       }).then(response => {
 
-        if (!response.ok) {
+        if (!response) {
           throw new Error('Network response was not ok');
+        } else {
+          return response.json();
         }
-
-        return response.json();
 
       }).then(data => {
 
-        saveTokenToCookie(data.token, 30, 'token');
-        saveTokenToCookie(data.user_display_name, 30, 'user');
-        navigate(`/dashboard`);
+        if (data) {
+
+
+
+          if (data.status === "success") {
+
+
+            setOtp(true);
+            setUserId(data.user_id);
+
+          }
+
+
+
+        } else {
+          setSubmitError('אחד או יותר מהפרטים לא נכונים')
+        }
+
+
+
+        // saveTokenToCookie(data.token, 30, 'token');
+        // saveTokenToCookie(data.user_display_name, 30, 'user');
 
       }).catch(error => {
         setSubmitError('אחד או יותר מהפרטים לא נכונים')
@@ -138,7 +160,51 @@ const Login = () => {
 
   };
 
+  const handleOTP = () => {
 
+    fetch(`${url}/wp-json/safelane-api/check-user-otp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Specify the content type as JSON
+      },
+      body: JSON.stringify({
+        "user_id": userId,
+        "otp": values.otp
+      })
+    }).then(response => {
+
+
+      if (!response) {
+        throw new Error('Network response was not ok');
+      } else {
+        return response.json();
+      }
+
+    }).then(data => {
+
+      if (data) {
+
+        if (data.status === "success") {
+
+          navigate(`/dashboard`);
+        } else {
+
+          setSubmitError('אחד או יותר מהפרטים לא נכונים')
+
+
+        }
+
+
+
+      }
+
+
+    }).catch(error => {
+      setSubmitError('אחד או יותר מהפרטים לא נכונים')
+    });
+
+
+  }
 
 
   const handleBlur = (e) => {
@@ -184,17 +250,46 @@ const Login = () => {
 
 
 
-  }, [watch('userName'), watch('password')])
+  }, [watch('userName'), watch('password')]);
+
+
+
+  const test = async () => {
+
+    fetch('https://wordpress-1308208-5685135.cloudwaysapps.com/wp-json/safelane-api/test-cookie', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      credentials: 'include' // Include cookies in the request
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+
+
+  }
+
+
+
+
+
 
 
 
   return (
     <div className="login">
+      <button onClick={() => test()}>test login</button>
       <div className="login__wrapper">
         <img className="login__logo" src={logo} loading="lazy" />
         <div className="login__box">
-          <h1 className="head_24"><strong>התחברות</strong></h1>
-          <div className="form">
+          <h1 className="head_24"><strong>{otp ? 'אימות דו-שלבי ' : 'התחברות'}</strong></h1>
+          {otp && <p className="parag_16 login__otp-message">יש להזין את קוד האימות מאפליקציית Google Authenticator</p>}
+          {!otp ? <div className="form">
             <form className="login__form" onSubmit={handleSubmit(handleLogin)}>
               <div className={errors.userName || submitError ? "form__input__wrapper with-errors" : "form__input__wrapper"}>
                 <input
@@ -248,6 +343,42 @@ const Login = () => {
             </form>
 
           </div>
+            :
+            <form className="login__form" onSubmit={handleSubmit(handleOTP)}>
+              <div className={errors.otp || submitError ? "form__input__wrapper with-errors" : "form__input__wrapper"}>
+                <input
+                  onFocus={handleFocus}
+                  className="form__input parag_16"
+                  type="number"
+                  placeholder=" "
+                  name="otp"
+                  minLength={6}
+                  maxLength={6}
+                  {...register("otp", {
+                    required: "נא להזין קוד אימות",
+                  })}
+                  onBlur={handleBlur}
+
+                />
+                <label className="placeholder-text parag_16">קוד אימות</label>
+                <button type="button" className={watch('otp') ? "clearInput show" : "clearInput"} onClick={() => { handleClearInput("otp"); setSubmitError('') }}></button>
+                {errors.otp && (<p className="form__input__errors caption_15">{errors.otp.message}</p>)}
+              </div>
+
+
+
+
+              <div className="form__button__wrapper">
+                {submitError && (<p className="form__input__errors caption_15">{submitError}</p>)}
+                <button
+                  className="basic-button blue-button"
+                  disabled={errors.otp}
+                >כניסה</button>
+              </div>
+            </form>
+
+          }
+
 
 
         </div>
