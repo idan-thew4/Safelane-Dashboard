@@ -281,14 +281,14 @@ const Store = ({ children }) => {
     const sendChatMessage = async (messages) => {
 
         try {
-            console.log('messages-JSON', JSON.stringify(messages))
+
             const response = await fetch(`${url}/wp-json/safelane-api/dashboard-save-chat-to-server`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     "authorization": `Bearer ${Cookies.get('authToken')}`,
                 },
-                body: JSON.stringify(messages)
+                body: "" + JSON.stringify(messages)
 
             });
             const data = await response.json();
