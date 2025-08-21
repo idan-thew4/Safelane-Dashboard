@@ -74,12 +74,12 @@ const Store = ({ children }) => {
         try {
             const response = await fetch(`${url}/wp-json/safelane-api/get-dashboard-data`, {
                 method: 'GET',
-                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-
-
+                    'Accept': 'application/json'
                 },
+                credentials: 'include'
+
 
             });
 
@@ -100,6 +100,35 @@ const Store = ({ children }) => {
         }
 
     }
+
+
+
+    // const test = async () => {
+
+    //     fetch('https://wordpress-1308208-5685135.cloudwaysapps.com/wp-json/safelane-api/test-cookie', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         },
+    //         credentials: 'include' // Include cookies in the request
+    //     })
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error('Network response was not ok');
+    //             }
+    //             return response.json();
+    //         })
+
+
+    // }
+
+
+
+
+
+
+
 
     const filters = [
         { value: 'yearly', label: 'השנה' },
