@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import logo from "../assets/safeLane_logo.svg";
-// import illustration from "../assets/login_illustration.svg";
-import { useForm } from "react-hook-form";
+import loaderSVG from "../assets/loader.svg";
+import { set, useForm } from "react-hook-form";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useStore } from "../context/Store";
 
 
-'test'
+
 
 
 const Login = () => {
@@ -20,12 +20,31 @@ const Login = () => {
   const [otp, setOtp] = useState(false);
   const [userId, setUserId] = useState();
 
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [attempts, setAttempts] = useState(0);
+  const [overallTimeLeft, setOverallTimeLeft] = useState(60);
+  const [timeoutId, setTimeoutId] = useState(null);
+  const [waitForResponse, setWaitForResponse] = useState(false);
+  const recaptchaRef = useRef();
+  const [loader, setLoader] = useState(false);
+
+
+  // Helper to format seconds as MM:SS
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  };
+
+
   //reCaptcha
 
   const onChange = () => {
 
     if (grecaptcha.getResponse() !== '') {
-      setReCaptchaError()
+      setReCaptchaError();
+
+      console.log('no reCaptcha error');
     }
 
   }
@@ -37,7 +56,8 @@ const Login = () => {
     getValues,
     reset,
     watch,
-    setFocus
+    setFocus,
+    setError
   } = useForm();
 
   const values = getValues();
@@ -57,6 +77,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    setLoader(true);
 
     const dashboardLogin = () => {
       fetch(`${url}/wp-json/safelane-api/check-user-password`, {
@@ -64,9 +85,11 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json', // Specify the content type as JSON
         },
+        credentials: 'include',
         body: JSON.stringify(data) // Convert the data object to JSON string
 
       }).then(response => {
+
 
         if (!response) {
           throw new Error('Network response was not ok');
@@ -75,18 +98,32 @@ const Login = () => {
         }
 
       }).then(data => {
+        setLoader(false);
+
 
         if (data) {
 
 
 
           if (data.status === "success") {
-
-
             setOtp(true);
             setUserId(data.user_id);
+            setSubmitError();
+            setWaitForResponse(false);
+            setAttempts(0);
+
+          } else if (attempts >= 3) {
+            timer();
+            setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
+            clearTimeout(timeoutId);
+
+          } else {
+            setSubmitError('אחד או יותר מהפרטים לא נכונים');
+            setWaitForResponse(false);
+            recaptchaRef.current.reset();
 
           }
+
 
 
 
@@ -96,10 +133,10 @@ const Login = () => {
 
 
 
-        // saveTokenToCookie(data.token, 30, 'token');
-        // saveTokenToCookie(data.user_display_name, 30, 'user');
+        saveTokenToCookie(data.user_display_name, 30, 'user');
 
       }).catch(error => {
+        setLoader(false);
         setSubmitError('אחד או יותר מהפרטים לא נכונים')
       });
     }
@@ -115,58 +152,30 @@ const Login = () => {
 
     if (grecaptcha.getResponse() !== '') {
 
-      // if (data.success) {
       data.recaptcha_token = grecaptcha.getResponse();
+      setWaitForResponse(true);
       dashboardLogin();
 
-      // } else {
-      //   setReCaptchaError('נא לנסות שוב')
-      // }
-
-      // (async () => {
-      //   try {
-      //     const response = await fetch(`${window.location.protocol}//${window.location.hostname}/reCaptcha.php?token=${grecaptcha.getResponse()}`, {
-      //       method: 'POST',
-      //       headers: {
-      //         'Content-Type': 'application/json'
-      //       },
-      //     })
-      //     const data = await response.json();
-      //     if (data.success) {
-      //       dashboardLogin();
-
-      //     } else {
-      //       setReCaptchaError('נא לנסות שוב')
-      //     }
-      //   } catch (error) {
-      //     console.error('Error fetching data:', error);
-      //   }
-      // })();
 
     } else {
       setReCaptchaError('אנא מלא')
     }
 
 
-
-
-
-    // dashboardLogin();
-
-
-
-
-
-
   };
 
   const handleOTP = () => {
+    setWaitForResponse(true);
+    setLoader(true);
+
 
     fetch(`${url}/wp-json/safelane-api/check-user-otp`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // Specify the content type as JSON
+        'Content-Type': 'application/json',
       },
+      credentials: 'include',
+
       body: JSON.stringify({
         "user_id": userId,
         "otp": values.otp
@@ -181,31 +190,42 @@ const Login = () => {
       }
 
     }).then(data => {
+      setLoader(false);
+
 
       if (data) {
 
         if (data.status === "success") {
 
           navigate(`/dashboard`);
+
+        } else if (attempts >= 3) {
+          timer();
+          setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
+          clearTimeout(timeoutId);
+
         } else {
-
-          setSubmitError('אחד או יותר מהפרטים לא נכונים')
-
+          setSubmitError('אחד או יותר מהפרטים לא נכונים');
+          setWaitForResponse(false);
 
         }
-
-
-
+      } else {
+        setSubmitError('אחד או יותר מהפרטים לא נכונים')
       }
 
 
+
+
+
+
     }).catch(error => {
-      setSubmitError('אחד או יותר מהפרטים לא נכונים')
+      setSubmitError('אחד או יותר מהפרטים לא נכונים');
+      setLoader(false);
+
     });
 
 
   }
-
 
   const handleBlur = (e) => {
 
@@ -253,27 +273,47 @@ const Login = () => {
   }, [watch('userName'), watch('password')]);
 
 
+  const startTimeout = () => {
+    const id = setTimeout(() => {
 
-  const test = async () => {
+      setAttempts(0);
+      startTimeout();
 
-    fetch('https://wordpress-1308208-5685135.cloudwaysapps.com/wp-json/safelane-api/test-cookie', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      credentials: 'include' // Include cookies in the request
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+    }, 5000);
+
+    setTimeoutId(id);
+  };
+
+
+  function timer() {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+
+          return 0;
         }
-        return response.json();
-      })
 
-
+        return prev - 1;
+      });
+    }, 1000);
   }
 
+  useEffect(() => {
+    if (timeLeft > 0) {
+      setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
+    } else {
+      setSubmitError();
+      setWaitForResponse(false);
+      if (!otp) {
+        recaptchaRef.current.reset();
+
+      }
+      setAttempts(0);
+
+
+    }
+  }, [timeLeft]);
 
 
 
@@ -283,10 +323,11 @@ const Login = () => {
 
   return (
     <div className="login">
-      <button onClick={() => test()}>test login</button>
+      {/* <button onClick={() => test()}>test login</button> */}
       <div className="login__wrapper">
         <img className="login__logo" src={logo} loading="lazy" />
-        <div className="login__box">
+
+        {loader ? <img className="loader" src={loaderSVG} /> : <div className="login__box">
           <h1 className="head_24"><strong>{otp ? 'אימות דו-שלבי ' : 'התחברות'}</strong></h1>
           {otp && <p className="parag_16 login__otp-message">יש להזין את קוד האימות מאפליקציית Google Authenticator</p>}
           {!otp ? <div className="form">
@@ -327,6 +368,7 @@ const Login = () => {
               </div>
               <div className="reCaptcha">
                 <ReCAPTCHA
+                  ref={recaptchaRef}
                   sitekey="6LcFZgUqAAAAAGL_-Ij_y4TzF318JM48m-E6ab4u"
                   onChange={onChange} />
                 {reCaptchaError && <p className="form__input__errors caption_15">{reCaptchaError}</p>}
@@ -337,7 +379,18 @@ const Login = () => {
                 {submitError && (<p className="form__input__errors caption_15">{submitError}</p>)}
                 <button
                   className="basic-button blue-button"
-                  disabled={errors.userName || errors.password || reCaptchaError}
+                  disabled={waitForResponse || errors.userName || errors.password || reCaptchaError}
+
+                  onClick={() => {
+                    if (!errors.userName && !errors.password && !reCaptchaError) {
+                      handleSubmit();
+                      if (timeoutId !== null) {
+                        startTimeout()
+
+                      }
+                      setAttempts((prev) => prev + 1);
+                    }
+                  }}
                 >כניסה</button>
               </div>
             </form>
@@ -349,7 +402,7 @@ const Login = () => {
                 <input
                   onFocus={handleFocus}
                   className="form__input parag_16"
-                  type="number"
+                  type="text"
                   placeholder=" "
                   name="otp"
                   minLength={6}
@@ -372,23 +425,35 @@ const Login = () => {
                 {submitError && (<p className="form__input__errors caption_15">{submitError}</p>)}
                 <button
                   className="basic-button blue-button"
-                  disabled={errors.otp}
+                  disabled={errors.otp || waitForResponse}
+                  onClick={() => {
+                    if (!errors.otp) {
+                      handleSubmit();
+                      if (timeoutId !== null) {
+                        startTimeout()
+                      }
+                      setAttempts((prev) => prev + 1);
+
+                    }
+                  }}
+
                 >כניסה</button>
               </div>
             </form>
-
           }
 
+        </div>}
 
 
-        </div>
 
 
-      </div>
-    </div>
+      </div >
+    </div >
 
   )
 
 }
 
 export default Login
+
+

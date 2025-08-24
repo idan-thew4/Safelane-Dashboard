@@ -80,9 +80,11 @@ const Single = ({ item, itemKey, isActive, onItemClick }) => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        "authorization": `Bearer ${Cookies.get('authToken')}`,
+                        // "authorization": `Bearer ${Cookies.get('authToken')}`,
 
                     },
+                    credentials: 'include',
+
                 });
                 if (!response.ok) {
                     navigate(`/login`);
@@ -213,8 +215,10 @@ const Single = ({ item, itemKey, isActive, onItemClick }) => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        "authorization": `Bearer ${Cookies.get('authToken')}`,
+                        // "authorization": `Bearer ${Cookies.get('authToken')}`,
                     },
+                    credentials: 'include',
+
                     body: JSON.stringify({
                         "wp-ticket-id": reorderedObject['wp-ticket-id'],
                         "status": status

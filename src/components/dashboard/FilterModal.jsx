@@ -173,6 +173,8 @@ const FilterModal = ({ firstDate }) => {
                     'Content-Type': 'application/json',
                     // "authorization": `Bearer ${Cookies.get('authToken')}`,
                 },
+                credentials: 'include',
+
                 body: JSON.stringify({
                     range: query
                 })

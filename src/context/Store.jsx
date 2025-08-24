@@ -60,7 +60,7 @@ const Store = ({ children }) => {
 
 
     const redirectsToLogin = () => {
-        Cookies.remove('authToken');
+        // Cookies.remove('authToken');
         Cookies.remove('safelane-user');
         navigate(`/login`);
     }
@@ -84,7 +84,7 @@ const Store = ({ children }) => {
             });
 
             if (!response.ok) {
-                Cookies.remove('authToken');
+                // Cookies.remove('authToken');
                 Cookies.remove('safelane-user');
                 navigate(`/login`);
             }
@@ -265,11 +265,9 @@ const Store = ({ children }) => {
     // const url = 'https://cms.lettersontheway.com';
 
 
-
-
     const getInquiries = async () => {
 
-        const token = Cookies.get('authToken');
+        // const token = Cookies.get('authToken');
 
 
         try {
@@ -277,8 +275,11 @@ const Store = ({ children }) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    "authorization": `Bearer ${Cookies.get('authToken')}`,
+
+                    // "authorization": `Bearer ${Cookies.get('authToken')}`,
                 },
+                credentials: 'include',
+
 
             });
 
@@ -316,8 +317,10 @@ const Store = ({ children }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "authorization": `Bearer ${Cookies.get('authToken')}`,
+                    // "authorization": `Bearer ${Cookies.get('authToken')}`,
                 },
+                credentials: 'include',
+
                 body: "" + JSON.stringify(messages)
 
             });
@@ -343,8 +346,9 @@ const Store = ({ children }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "authorization": `Bearer ${Cookies.get('authToken')}`,
+                    // "authorization": `Bearer ${Cookies.get('authToken')}`,
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     "wp-ticket-id": id,
                     "user-tag-id": tag
@@ -367,7 +371,6 @@ const Store = ({ children }) => {
         waiting_time: []
 
     })
-
 
 
     const getChecked = (selection, type, e) => {
@@ -511,16 +514,9 @@ const Store = ({ children }) => {
 
     }
 
-
-
-
-
-
-
     const getQueriedData = async (searchKey = false) => {
 
         setFilterLoader(true);
-        console.log('qureied')
 
 
         try {
@@ -537,8 +533,10 @@ const Store = ({ children }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "authorization": `Bearer ${Cookies.get('authToken')}`,
+                    // "authorization": `Bearer ${Cookies.get('authToken')}`,
                 },
+                credentials: 'include',
+
                 body: JSON.stringify({ "data": { ...finalQuery } })
             });
 

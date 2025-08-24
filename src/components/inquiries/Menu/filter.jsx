@@ -61,8 +61,10 @@ const Filter = ({ type, copy }) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          "authorization": `Bearer ${Cookies.get('authToken')}`,
+          // "authorization": `Bearer ${Cookies.get('authToken')}`,
         },
+        credentials: 'include',
+
       });
       if (!response.ok) {
         redirectsToLogin();
