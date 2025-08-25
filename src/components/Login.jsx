@@ -41,7 +41,7 @@ const Login = () => {
   const onChange = () => {
 
     if (grecaptcha.getResponse() !== '') {
-      setReCaptchaError();
+      setReCaptchaError()
     }
 
   }
@@ -73,7 +73,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    setLoader(true);
+
 
     const dashboardLogin = () => {
       fetch(`${url}/wp-json/safelane-api/check-user-password`, {
@@ -94,7 +94,6 @@ const Login = () => {
         }
 
       }).then(data => {
-        setLoader(false);
 
 
         if (data) {
@@ -126,6 +125,7 @@ const Login = () => {
 
         } else {
           setSubmitError('אחד או יותר מהפרטים לא נכונים')
+
         }
 
 
@@ -148,9 +148,11 @@ const Login = () => {
     };
 
     if (grecaptcha.getResponse() !== '') {
+      setLoader(true);
 
-      data.recaptcha_token = grecaptcha.getResponse();
-      setWaitForResponse(true);
+
+      // data.recaptcha_token = grecaptcha.getResponse();
+      // setWaitForResponse(true);
       dashboardLogin();
 
 
