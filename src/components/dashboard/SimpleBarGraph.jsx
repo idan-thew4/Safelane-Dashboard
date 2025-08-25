@@ -92,7 +92,6 @@ const BarGraph = ({ type, title, data, legend }) => {
     };
 
 
-    console.log(setUserChoice(data, filterChoice, 'two-param'))
 
 
     return (

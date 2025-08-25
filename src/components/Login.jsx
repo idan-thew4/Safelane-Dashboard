@@ -22,7 +22,6 @@ const Login = () => {
 
   const [timeLeft, setTimeLeft] = useState(60);
   const [attempts, setAttempts] = useState(0);
-  const [overallTimeLeft, setOverallTimeLeft] = useState(60);
   const [timeoutId, setTimeoutId] = useState(null);
   const [waitForResponse, setWaitForResponse] = useState(false);
   const recaptchaRef = useRef();
@@ -43,8 +42,6 @@ const Login = () => {
 
     if (grecaptcha.getResponse() !== '') {
       setReCaptchaError();
-
-      console.log('no reCaptcha error');
     }
 
   }
@@ -57,7 +54,6 @@ const Login = () => {
     reset,
     watch,
     setFocus,
-    setError
   } = useForm();
 
   const values = getValues();
@@ -102,7 +98,6 @@ const Login = () => {
 
 
         if (data) {
-
 
 
           if (data.status === "success") {
@@ -307,11 +302,8 @@ const Login = () => {
       setWaitForResponse(false);
       if (!otp) {
         recaptchaRef.current.reset();
-
       }
       setAttempts(0);
-
-
     }
   }, [timeLeft]);
 

@@ -30,11 +30,9 @@ const Messages = ({ id, content }) => {
 
         setMessages(content);
 
-        Object.keys(content).map((item, index) => {
-
+        Object.keys(content || {}).map((item, index) => {
             if (index === 0) {
                 currentDate = content[item][0];
-
             }
         });
 
@@ -210,7 +208,7 @@ const Messages = ({ id, content }) => {
             <div></div>
             <ul className="messages" ref={messagesContainer}>
 
-                {Object.keys(messages).map((item, index) => {
+                {Object.keys(messages || {}).map((item, index) => {
 
 
 
@@ -256,7 +254,7 @@ const Messages = ({ id, content }) => {
                             <div className="tagging-buttons">
                                 {tagging.map((button, key) => {
                                     return (
-                                        <button key={key} className="basic-button white-button on-bg" onClick={() => updateTag(button.tagging)}>{button.copy}</button>
+                                        <button key={key} className="basic-button white-button on-bg tagging" onClick={() => updateTag(button.tagging)}>{button.copy}</button>
                                     )
                                 })}
                             </div>

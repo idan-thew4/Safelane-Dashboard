@@ -1738,6 +1738,13 @@ form[role=search] .filter {
   box-shadow: none;
   font-weight: 400;
 }
+.basic-button.white-button.on-bg.tagging {
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0);
+  transition: 0.3s all;
+}
+.basic-button.white-button.on-bg.tagging:hover {
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.15);
+}
 .basic-button.white-button.on-bg:hover {
   background: white;
 }
@@ -2043,6 +2050,7 @@ li.tag-strip .action-bar .tagging-buttons {
 }
 li.tag-strip .action-bar:hover .tagging-buttons {
   width: 27rem;
+  padding: 1rem;
 }
 li.tag-strip .action-bar:after {
   content: "";

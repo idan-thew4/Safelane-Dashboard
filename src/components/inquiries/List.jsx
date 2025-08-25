@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import InquirySingle from "./Single";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -12,7 +12,7 @@ const List = ({ list }) => {
   const headlines = ['מס’ דיווח', 'מס’ רכב', 'סוג עבירה', 'מועד הפניה', 'זמן המתנה', 'תיוג']
   const [listHeadlines, setListHeadlines] = useState(headlines)
   const tab_headlines = { opened: 'ממתינים למענה', closed: 'ארכיון' }
-  const {setSideMenuType, activeItem, setActiveItem, currentItem, getTicketData, ticketData, filterLoader} = useStore();
+  const { setSideMenuType, activeItem, setActiveItem, currentItem, getTicketData, ticketData, filterLoader } = useStore();
 
   const changeHeadline = (e) => {
     setSideMenuType(e)
@@ -27,7 +27,7 @@ const List = ({ list }) => {
   }
 
 
-// Parse the "inquiry_date" string into a Date object
+  // Parse the "inquiry_date" string into a Date object
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split('.').map(Number);
     // Months are zero-based in JavaScript Dates, so subtract 1 from the month
@@ -43,18 +43,12 @@ const List = ({ list }) => {
     });
   })
 
-  useEffect(()=> {
-
-    console.log(filterLoader)
-
-  }, [filterLoader])
-
 
   if (filterLoader) {
     return <div className="loader__wrapper filter">
-        <img src={loader}/>
+      <img src={loader} />
     </div>;
-}
+  }
 
   return (
     <Tabs direction={'rtl'} onSelect={(e) => changeHeadline(e)} >
@@ -73,17 +67,17 @@ const List = ({ list }) => {
                 return (<li className="parag_16 bold" key={key}>{headline}</li>)
               })}
             </ul>
-            <ul className={type} style = {{
+            <ul className={type} style={{
               overflow: list[type].length > 8 ? "auto" : "hidden",
-              overflowX:"hidden"
-              }}>
+              overflowX: "hidden"
+            }}>
               {list[type].map((item, itemKey) => {
                 return (
-                  <InquirySingle 
-                  key={itemKey} 
-                  item={item} 
-                  itemKey={itemKey}
-                  isActive={ticketData ? activeItem : ''}
+                  <InquirySingle
+                    key={itemKey}
+                    item={item}
+                    itemKey={itemKey}
+                    isActive={ticketData ? activeItem : ''}
                   ></InquirySingle>
                 )
               })}

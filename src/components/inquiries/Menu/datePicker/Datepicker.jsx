@@ -9,7 +9,7 @@ function Datepicker() {
     const { getChecked } = useStore();
 
     const today = new Date();
-const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
     const [state, setState] = useState({
         startDate: null,
@@ -17,7 +17,6 @@ const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
         focusedInput: START_DATE
     });
 
-    console.log(state);
 
 
     const {
@@ -69,7 +68,7 @@ const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
         day: '2-digit',
         month: '2-digit',
         year: 'numeric'
-      };
+    };
 
 
 
@@ -99,11 +98,11 @@ const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
                     }}
                 >
                     <div className={`date-picker__frame selected`}>
-                        {state.startDate !==  null ? state.startDate.toLocaleDateString('en-GB', options) : 'תאריך התחלה'}
+                        {state.startDate !== null ? state.startDate.toLocaleDateString('en-GB', options) : 'תאריך התחלה'}
                     </div>
                     <p>עד</p>
-                    <div  className={`date-picker__frame selected`}>
-                        {state.endDate !==  null ?  state.endDate.toLocaleDateString('en-GB', options) : 'תאריך סיום'}
+                    <div className={`date-picker__frame selected`}>
+                        {state.endDate !== null ? state.endDate.toLocaleDateString('en-GB', options) : 'תאריך סיום'}
                     </div>
                 </div>
 

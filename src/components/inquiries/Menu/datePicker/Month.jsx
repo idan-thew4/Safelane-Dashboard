@@ -21,30 +21,30 @@ function Month({ year, month, firstDayOfWeek, goToPreviousMonths, goToNextMonths
 
   return (
     <div key={monthKey}>
-      <div style={{ textAlign: "center", margin: "0 0 16px",  }}>
-      <div
-                    style={{
-                      display: "flex",
-                      justifyContent:"space-between",
-                      alignItems: "center",
-                      rowGap: '1rem',
-                      padding: '1rem 1.5rem'
-  
-                  }}>
-        <div>
-        <strong className="parag_14_main">{hebrewMonthLabel}</strong>
-        <strong className="parag_14_main"> {year}</strong>
+      <div style={{ textAlign: "center", margin: "0 0 16px", }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            rowGap: '1rem',
+            padding: '1rem 1.5rem'
+
+          }}>
+          <div>
+            <strong className="parag_14_main">{hebrewMonthLabel}</strong>
+            <strong className="parag_14_main"> {year}</strong>
+          </div>
+          <div style={{ display: "flex", }}>
+            <button style={{ display: "flex", }} type="button" onClick={goToPreviousMonths}>
+              <img src={arrow} />
+            </button>
+            <button style={{ display: "flex", }} type="button" onClick={goToNextMonths}>
+              <img style={{ rotate: '180deg' }} src={arrow} />
+            </button>
+          </div>
         </div>
-        <div style={{display: "flex",}}>
-        <button style={{display: "flex",}} type="button" onClick={goToPreviousMonths}>
-          <img src={arrow}/>
-            </button>
-            <button style={{display: "flex",}} type="button" onClick={goToNextMonths}>
-            <img style={{rotate: '180deg'}} src={arrow}/>
-            </button>
-            </div>
-            </div>
-        
+
 
 
       </div>
@@ -53,9 +53,9 @@ function Month({ year, month, firstDayOfWeek, goToPreviousMonths, goToNextMonths
           display: "grid",
           gridTemplateColumns: "repeat(7, 1fr)",
           justifyContent: "center",
-          fontWeight: '700', 
-          marginBottom: '2rem', 
-          
+          fontWeight: '700',
+          marginBottom: '2rem',
+
 
         }}
       >
@@ -73,9 +73,13 @@ function Month({ year, month, firstDayOfWeek, goToPreviousMonths, goToNextMonths
           rowGap: "0.5rem"
         }}
       >
-        {days.map(day => (
-          <Day date={day.date} key={day.dayLabel}  day={day.date ? day.date.getDate().toString() : ""}/>
-        ))}
+        {days.map((day, idx) => {
+          // Unique key: use timestamp for real days, fallback for empty cells
+          const key = day.date
+            ? day.date.getTime()
+            : `empty-${year}-${month}-${day.dayLabel}-${idx}`;
+          return <Day date={day.date} key={key} day={day.date ? day.date.getDate().toString() : ""} />;
+        })}
       </div>
     </div>
   );
