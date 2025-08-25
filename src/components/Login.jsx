@@ -107,7 +107,7 @@ const Login = () => {
             setWaitForResponse(false);
             setAttempts(0);
 
-          } else if (attempts >= 3) {
+          } else if (attempts > 3) {
             timer();
             setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
             clearTimeout(timeoutId);
@@ -194,7 +194,7 @@ const Login = () => {
 
           navigate(`/dashboard`);
 
-        } else if (attempts >= 3) {
+        } else if (attempts > 3) {
           timer();
           setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
           clearTimeout(timeoutId);
