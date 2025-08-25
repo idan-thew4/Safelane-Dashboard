@@ -108,6 +108,8 @@ const Login = () => {
             setAttempts(0);
 
           } else if (attempts > 3) {
+            setTimeLeft(60)
+
             timer();
             setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
             clearTimeout(timeoutId);
@@ -195,6 +197,7 @@ const Login = () => {
           navigate(`/dashboard`);
 
         } else if (attempts > 3) {
+          setTimeLeft(60)
           timer();
           setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
           clearTimeout(timeoutId);
@@ -304,6 +307,7 @@ const Login = () => {
         recaptchaRef.current.reset();
       }
       setAttempts(0);
+
     }
   }, [timeLeft]);
 
