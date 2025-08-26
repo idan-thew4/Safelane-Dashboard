@@ -76,6 +76,7 @@ const Login = () => {
 
 
     const dashboardLogin = () => {
+
       fetch(`${url}/wp-json/safelane-api/check-user-password`, {
         method: 'POST',
         headers: {
@@ -94,6 +95,8 @@ const Login = () => {
         }
 
       }).then(data => {
+        setLoader(false);
+
 
 
         if (data) {
@@ -106,9 +109,8 @@ const Login = () => {
             setWaitForResponse(false);
             setAttempts(0);
 
-          } else if (attempts > 3) {
+          } else if (attempts >= 3) {
             setTimeLeft(60)
-
             timer();
             setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
             clearTimeout(timeoutId);
@@ -151,7 +153,7 @@ const Login = () => {
       setLoader(true);
 
 
-      // data.recaptcha_token = grecaptcha.getResponse();
+      data.recaptcha_token = grecaptcha.getResponse();
       // setWaitForResponse(true);
       dashboardLogin();
 
@@ -198,15 +200,17 @@ const Login = () => {
 
           navigate(`/dashboard`);
 
-        } else if (attempts > 3) {
+        } else if (attempts >= 3) {
           setTimeLeft(60)
           timer();
           setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
           clearTimeout(timeoutId);
+          setLoader(false)
 
         } else {
           setSubmitError('אחד או יותר מהפרטים לא נכונים');
           setWaitForResponse(false);
+
 
         }
       } else {
@@ -324,9 +328,12 @@ const Login = () => {
       {/* <button onClick={() => test()}>test login</button> */}
       <div className="login__wrapper">
         <img className="login__logo" src={logo} loading="lazy" />
+        <h1 className="head_24"><strong>{otp ? 'אימות דו-שלבי ' : 'התחברות'}</strong></h1>
 
-        {loader ? <img className="loader" src={loaderSVG} /> : <div className="login__box">
-          <h1 className="head_24"><strong>{otp ? 'אימות דו-שלבי ' : 'התחברות'}</strong></h1>
+
+        {loader && <img className="loader" src={loaderSVG} />}
+        <div className="login__box">
+
           {otp && <p className="parag_16 login__otp-message">יש להזין את קוד האימות מאפליקציית Google Authenticator</p>}
           {!otp ? <div className="form">
             <form className="login__form" onSubmit={handleSubmit(handleLogin)}>
@@ -377,7 +384,7 @@ const Login = () => {
                 {submitError && (<p className="form__input__errors caption_15">{submitError}</p>)}
                 <button
                   className="basic-button blue-button"
-                  disabled={waitForResponse || errors.userName || errors.password || reCaptchaError}
+                  disabled={waitForResponse || errors.userName || errors.password || reCaptchaError || timeLeft > 0 && timeLeft < 60}
 
                   onClick={() => {
                     if (!errors.userName && !errors.password && !reCaptchaError) {
@@ -423,7 +430,7 @@ const Login = () => {
                 {submitError && (<p className="form__input__errors caption_15">{submitError}</p>)}
                 <button
                   className="basic-button blue-button"
-                  disabled={errors.otp || waitForResponse}
+                  disabled={errors.otp || waitForResponse || timeLeft > 0 && timeLeft < 60}
                   onClick={() => {
                     if (!errors.otp) {
                       handleSubmit();
@@ -440,7 +447,7 @@ const Login = () => {
             </form>
           }
 
-        </div>}
+        </div>
 
 
 
