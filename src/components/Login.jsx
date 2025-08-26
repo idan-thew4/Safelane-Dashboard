@@ -357,6 +357,8 @@ const Login = () => {
                     required: "נא להזין שם משתמש",
                   })}
                   onBlur={handleBlur}
+                  disabled={timeLeft > 0 && timeLeft <= 60}
+
 
                 />
                 <label className="placeholder-text parag_16">שם משתמש</label>
@@ -374,6 +376,8 @@ const Login = () => {
                     required: "נא להזין סיסמא",
                   })}
                   onBlur={handleBlur}
+                  disabled={timeLeft > 0 && timeLeft <= 60}
+
 
                 />
                 <label className="placeholder-text parag_16">סיסמא</label>
@@ -413,6 +417,7 @@ const Login = () => {
             <form className="login__form" onSubmit={handleSubmit(handleOTP)}>
               <div className={errors.otp || submitError ? "form__input__wrapper with-errors" : "form__input__wrapper"}>
                 <input
+                  disabled={timeLeft > 0 && timeLeft <= 60}
                   onFocus={handleFocus}
                   className="form__input parag_16"
                   type="text"
