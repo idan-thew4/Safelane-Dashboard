@@ -21,11 +21,13 @@ const Login = () => {
   const [userId, setUserId] = useState();
 
   const [timeLeft, setTimeLeft] = useState(60);
-  const [attempts, setAttempts] = useState(0);
+  // const [attempts, setAttempts] = useState(0);
+  const attemptsRef = useRef(0);
   const [timeoutId, setTimeoutId] = useState(null);
   const [waitForResponse, setWaitForResponse] = useState(false);
   const recaptchaRef = useRef();
   const [loader, setLoader] = useState(false);
+
 
 
   // Helper to format seconds as MM:SS
@@ -73,9 +75,12 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    attemptsRef.current++;
+
 
 
     const dashboardLogin = () => {
+
 
       fetch(`${url}/wp-json/safelane-api/check-user-password`, {
         method: 'POST',
@@ -107,9 +112,9 @@ const Login = () => {
             setUserId(data.user_id);
             setSubmitError();
             setWaitForResponse(false);
-            setAttempts(0);
+            attemptsRef.current = 0;
 
-          } else if (attempts >= 3) {
+          } else if (attemptsRef.current >= 3) {
             setTimeLeft(60)
             timer();
             setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
@@ -168,6 +173,8 @@ const Login = () => {
   const handleOTP = () => {
     setWaitForResponse(true);
     setLoader(true);
+    attemptsRef.current++;
+
 
 
     fetch(`${url}/wp-json/safelane-api/check-user-otp`, {
@@ -194,13 +201,14 @@ const Login = () => {
       setLoader(false);
 
 
+
       if (data) {
 
         if (data.status === "success") {
 
           navigate(`/dashboard`);
 
-        } else if (attempts >= 3) {
+        } else if (attemptsRef.current >= 3) {
           setTimeLeft(60)
           timer();
           setSubmitError(`עברת את מכסת השליחות. נסה שוב בעוד ${formatTime(timeLeft)}`);
@@ -280,7 +288,7 @@ const Login = () => {
   const startTimeout = () => {
     const id = setTimeout(() => {
 
-      setAttempts(0);
+      attemptsRef.current = 0;
       startTimeout();
 
     }, 5000);
@@ -312,10 +320,11 @@ const Login = () => {
       if (!otp) {
         recaptchaRef.current.reset();
       }
-      setAttempts(0);
+      attemptsRef.current = 0;
 
     }
   }, [timeLeft]);
+
 
 
 
@@ -384,7 +393,7 @@ const Login = () => {
                 {submitError && (<p className="form__input__errors caption_15">{submitError}</p>)}
                 <button
                   className="basic-button blue-button"
-                  disabled={waitForResponse || errors.userName || errors.password || reCaptchaError || timeLeft > 0 && timeLeft < 60}
+                  disabled={waitForResponse || errors.userName || errors.password || reCaptchaError || timeLeft > 0 && timeLeft <= 60}
 
                   onClick={() => {
                     if (!errors.userName && !errors.password && !reCaptchaError) {
@@ -393,7 +402,6 @@ const Login = () => {
                         startTimeout()
 
                       }
-                      setAttempts((prev) => prev + 1);
                     }
                   }}
                 >כניסה</button>
@@ -430,15 +438,13 @@ const Login = () => {
                 {submitError && (<p className="form__input__errors caption_15">{submitError}</p>)}
                 <button
                   className="basic-button blue-button"
-                  disabled={errors.otp || waitForResponse || timeLeft > 0 && timeLeft < 60}
+                  disabled={errors.otp || waitForResponse || timeLeft > 0 && timeLeft <= 60}
                   onClick={() => {
                     if (!errors.otp) {
                       handleSubmit();
                       if (timeoutId !== null) {
                         startTimeout()
                       }
-                      setAttempts((prev) => prev + 1);
-
                     }
                   }}
 
