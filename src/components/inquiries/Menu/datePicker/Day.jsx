@@ -39,10 +39,9 @@ function Day({ day, date, index }) {
   let selected = 0;
 
   const countSelected = () => {
-    if(isSelected) {
+    if (isSelected) {
       selected++
     }
-    console.log(selected)
 
   }
 

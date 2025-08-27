@@ -32,7 +32,6 @@ const InquiryHeader = ({ id }) => {
         const updatedInquiries = { ...inquiries };
         const selectedTab = updatedInquiries[Object.keys(updatedInquiries)[sideMenuType]];
 
-        console.log(ticketData)
 
 
         selectedTab.map((item, index) => {

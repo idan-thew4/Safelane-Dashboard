@@ -261,8 +261,7 @@ const Store = ({ children }) => {
     }];
 
 
-    const url = 'https://wordpress-1308208-5685135.cloudwaysapps.com/';
-    // const url = 'https://cms.lettersontheway.com';
+    // const url = 'https://wordpress-1308208-5685135.cloudwaysapps.com/';
 
 
     const getInquiries = async () => {
@@ -393,7 +392,6 @@ const Store = ({ children }) => {
 
                     if (!selection.target) {
                         selectedFilter = selection
-                        console.log(true)
                     } else {
                         selectedFilter = selection.target.id;
                     }

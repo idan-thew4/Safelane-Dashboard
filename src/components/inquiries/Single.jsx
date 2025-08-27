@@ -193,10 +193,7 @@ const Single = ({ item, itemKey, isActive, onItemClick }) => {
 
             }
 
-            console.log({
-                wp_ticket_id: reorderedObject['wp-ticket-id'],
-                status: status
-            })
+
 
 
 
