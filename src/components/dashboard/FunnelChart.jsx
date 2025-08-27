@@ -107,9 +107,13 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
                         {shape === 'polygon' &&
                             <div className="funnel-chart__total-percentage">
 
+                                {console.log('dataPoint', data[dataPoints[0]][key])}
+                                {console.log('letters', data[dataPoints[0]]['letters'])}
 
 
-                                {((data[dataPoints[0]][key] / data[dataPoints[0]]['letters']) * 100).toFixed(1) !== 0 && <p className="num_20">{((data[dataPoints[0]][key] / data[dataPoints[0]]['letters']) * 100).toFixed(1)}%</p>}
+
+
+                                {Number((data[dataPoints[0]]['letters'])) !== 0 && <p className="num_20">{((data[dataPoints[0]][key] / data[dataPoints[0]]['letters']) * 100).toFixed(1)}%</p>}
 
                                 <svg width="41" height="65" viewBox="0 0 41 65" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M36.6816 65H40.5L40.5 0L7.97321 0C2.61846 0 -0.753426 5.76748 1.87325 10.4337L30.5817 61.4337C31.8218 63.6368 34.1535 65 36.6816 65Z" fill="" />
