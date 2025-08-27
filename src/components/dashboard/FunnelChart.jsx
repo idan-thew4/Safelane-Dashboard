@@ -25,7 +25,6 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
         dataPoints.push(key);
     });
 
-    setDatapoints[dataArray];
 
 
     const getChangePercentage = (key) => {
@@ -33,18 +32,28 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
         let today = data[dataPoints[0]][key];
         let past30Days = data[dataPoints[1]][key];
         // let difference = today - past30Days;
+
         let result = ((today / past30Days) - 1) * 100;
         // let result = (difference / avg) * 100;
 
         let arrow = '';
 
-        if (result === 0) {
-            arrow = 'none';
+        if (past30Days !== 0) {
+
+            if (result === 0) {
+                arrow = 'none';
+            } else {
+                arrow = Math.sign(result) === 1 ? 'up' : 'down';
+            }
+
+            return [Math.trunc(Math.abs(result)), arrow]
+
+
+
         } else {
-            arrow = Math.sign(result) === 1 ? 'up' : 'down';
+            return false
         }
 
-        return [Math.trunc(Math.abs(result)), arrow]
 
     }
 
@@ -73,6 +82,7 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
         >
             <ul className="funnel-chart__wrapper">
                 {Object.keys(data[dataPoints[0]]).map((key, index) => (
+
                     <li key={index} className={shape}>
                         <div className={`funnel-chart__calc`}>
                             <div className="funnel-chart__number">
@@ -96,7 +106,11 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
                         </div>
                         {shape === 'polygon' &&
                             <div className="funnel-chart__total-percentage">
-                                <p className="num_20">{((data[dataPoints[0]][key] / data[dataPoints[0]]['letters']) * 100).toFixed(1)}%</p>
+
+
+
+                                {((data[dataPoints[0]][key] / data[dataPoints[0]]['letters']) * 100).toFixed(1) !== 0 && <p className="num_20">{((data[dataPoints[0]][key] / data[dataPoints[0]]['letters']) * 100).toFixed(1)}%</p>}
+
                                 <svg width="41" height="65" viewBox="0 0 41 65" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M36.6816 65H40.5L40.5 0L7.97321 0C2.61846 0 -0.753426 5.76748 1.87325 10.4337L30.5817 61.4337C31.8218 63.6368 34.1535 65 36.6816 65Z" fill="" />
                                 </svg>
