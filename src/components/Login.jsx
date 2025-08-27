@@ -216,13 +216,13 @@ const Login = () => {
           setLoader(false)
 
         } else {
-          setSubmitError('אחד או יותר מהפרטים לא נכונים');
+          setSubmitError('הקוד שגוי');
           setWaitForResponse(false);
 
 
         }
       } else {
-        setSubmitError('אחד או יותר מהפרטים לא נכונים')
+        setSubmitError('הקוד שגוי')
       }
 
 
@@ -231,7 +231,7 @@ const Login = () => {
 
 
     }).catch(error => {
-      setSubmitError('אחד או יותר מהפרטים לא נכונים');
+      setSubmitError('אחד או יותר מהפרטים לא הקוד שגוי');
       setLoader(false);
 
     });
