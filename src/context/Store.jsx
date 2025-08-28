@@ -57,13 +57,37 @@ const users = {
 
 //Wrap child components in the Context Provider and supply the state value.
 const Store = ({ children }) => {
+    const [dashboardLoader, setDashboardLoader] = useState(false);
 
 
-    const redirectsToLogin = () => {
-        // Cookies.remove('authToken');
-        Cookies.remove('safelane-user');
-        navigate(`/login`);
+    const redirectsToLogin = async () => {
+        setDashboardLoader(true);
+
+        try {
+            const response = await fetch(`${url}/wp-json/safelane-api/log-out`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                credentials: 'include'
+            });
+
+            if (response) {
+                setDashboardLoader(false);
+                const data = await response.json();
+                if (data.status === 'success') {
+                    Cookies.remove('safelane-user');
+                    navigate(`/login`);
+                }
+            }
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     }
+
+
 
 
 
@@ -71,6 +95,7 @@ const Store = ({ children }) => {
     const [exportFilterIsOpen, setExportFilterIsOpen] = useState(false);
 
     const getData = async () => {
+
         try {
             const response = await fetch(`${url}/wp-json/safelane-api/get-dashboard-data`, {
                 method: 'GET',
@@ -95,8 +120,6 @@ const Store = ({ children }) => {
         } catch (error) {
             console.error('Error fetching data:', error);
             navigate(`/login`);
-
-
         }
 
     }
@@ -261,8 +284,8 @@ const Store = ({ children }) => {
     }];
 
 
-    // const url = 'https://wordpress-1308208-5685135.cloudwaysapps.com/';
-    const url = 'https://cms.lettersontheway.com';
+    const url = 'https://wordpress-1308208-5685135.cloudwaysapps.com/';
+    // const url = 'https://cms.lettersontheway.com';
 
 
 
@@ -616,7 +639,8 @@ const Store = ({ children }) => {
             filterLoader,
             exportFilterIsOpen,
             setExportFilterIsOpen,
-            url
+            url,
+            dashboardLoader
 
         }}>
             {children}

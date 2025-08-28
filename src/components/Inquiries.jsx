@@ -9,12 +9,12 @@ import loader from "../assets/loader.svg";
 
 
 const Inquiries = () => {
-    const { 
-        getInquiries, 
-        inquiries, 
-        setInquiries, 
-        activeFilter, 
-        setActiveFilter
+    const {
+        getInquiries,
+        inquiries,
+        setInquiries,
+        activeFilter,
+        dashboardLoader
     } = useStore();
     const [isLoading, setIsLoading] = useState(true);
     const filters = [
@@ -47,9 +47,9 @@ const Inquiries = () => {
 
 
 
-    if (isLoading) {
+    if (isLoading || dashboardLoader) {
         return <div className="loader__wrapper full-screen">
-            <img src={loader}/>
+            <img src={loader} />
         </div>;
     }
 
@@ -69,7 +69,7 @@ const Inquiries = () => {
                                     copy={filter.copy}
                                     active={activeFilter}
                                 />
-                                ))}
+                            ))}
 
                         </div>
 

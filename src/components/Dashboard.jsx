@@ -13,7 +13,7 @@ import FilterModal from "./dashboard/FilterModal";
 
 
 const Dashboard = () => {
-    const { filters, getData, setExportFilterIsOpen } = useStore();
+    const { filters, getData, setExportFilterIsOpen, dashboardLoader } = useStore();
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState('');
 
@@ -31,7 +31,7 @@ const Dashboard = () => {
             });
     }, []);
 
-    if (isLoading) {
+    if (isLoading || dashboardLoader) {
         return <div className="loader__wrapper full-screen">
             <img src={loader} />
         </div>;
