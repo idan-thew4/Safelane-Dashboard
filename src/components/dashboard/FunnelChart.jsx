@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Card from "../Card";
 import { useState } from "react";
-import { useStore } from "../../Context/Store";
+import { useStore } from "../../context/Store";
 
 
 const FunnelChart = ({ title, subTitle, data, shape, type }) => {
@@ -69,6 +69,9 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
 
 
 
+    if (dataPoints.length === 0) {
+        return null;
+    }
 
     return (
 
@@ -87,12 +90,16 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
                         <div className={`funnel-chart__calc`}>
                             <div className="funnel-chart__number">
                                 <p className="num_22">
-                                    {data[dataPoints[0]][key].toLocaleString()}
+
+                                    {data[dataPoints[0]][key] ? data[dataPoints[0]][key].toLocaleString() : 0}
                                     {shape === 'rectangle' && index !== 0 ?
-
-                                        <span className="parag_16">({((data[dataPoints[0]][key] / total) * 100).toFixed(1)}%)</span> : null
-
-                                    }
+                                        (() => {
+                                            const percent = (data[dataPoints[0]][key] / total) * 100;
+                                            return Number.isFinite(percent) && !isNaN(percent) ? (
+                                                <span className="parag_16">({percent.toFixed(1)}%)</span>
+                                            ) : null;
+                                        })()
+                                        : null}
                                 </p>
 
                                 {getChangePercentage(key)[0] ?

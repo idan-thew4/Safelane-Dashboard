@@ -299,10 +299,14 @@ const Store = ({ children }) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+
 
                     // "authorization": `Bearer ${Cookies.get('authToken')}`,
                 },
                 credentials: 'include',
+
+
 
 
             });

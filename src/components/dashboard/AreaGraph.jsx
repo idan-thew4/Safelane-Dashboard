@@ -37,7 +37,7 @@ const AreaGraph = ({ type, title, data }) => {
 
         useEffect(() => {
 
-            if (active) {
+            if (active && toolTip.current) {
                 setposData(coordinate.x - (toolTip.current.offsetWidth / 2));
             }
 
