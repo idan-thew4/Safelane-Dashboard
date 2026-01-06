@@ -91,7 +91,7 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
                             <div className="funnel-chart__number">
                                 <p className="num_22">
 
-                                    {data[dataPoints[0]][key] ? data[dataPoints[0]][key].toLocaleString() : 0}
+                                    {data[dataPoints[0]][key] ? data[dataPoints[0]][key].toLocaleString() : null}
                                     {shape === 'rectangle' && index !== 0 ?
                                         (() => {
                                             const percent = (data[dataPoints[0]][key] / total) * 100;
@@ -101,11 +101,13 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
                                         })()
                                         : null}
                                 </p>
-
-                                {getChangePercentage(key)[0] ?
-                                    <span className={`percentage_num parag_14 arrow-${getChangePercentage(key)[1]}`}>{getChangePercentage(key)[0]}%</span> : null
-
-                                }
+                                {(() => {
+                                    const change = getChangePercentage(key);
+                                    const value = change && Array.isArray(change) ? change[0] : null;
+                                    return Number.isFinite(value) && value !== 0 ? (
+                                        <span className={`percentage_num parag_14 arrow-${change[1]}`}>{value}%</span>
+                                    ) : null;
+                                })()}
 
 
                             </div>
