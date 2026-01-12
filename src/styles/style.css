@@ -2118,15 +2118,21 @@ li.tag-strip .parag_16 {
 }
 
 .input {
-  flex: 0 0 15.9rem;
+  flex: 0 0 17rem;
   padding: 2rem;
   box-shadow: 0px -10px 15px 0px rgba(0, 0, 0, 0.05);
   z-index: 9;
+  box-sizing: border-box;
 }
 .input .basic-button:not(.white-button) {
   flex: 0 0 11.6rem;
   margin: 0;
   justify-content: center;
+  margin: auto;
+}
+
+.input__templates_headline {
+  white-space: nowrap;
 }
 
 .input__form {
@@ -2143,6 +2149,7 @@ li.tag-strip .parag_16 {
 
 .input__textarea-wrapper {
   flex-grow: 1;
+  height: auto;
 }
 .input__textarea-wrapper .input__form-textarea {
   border: none;
@@ -2150,12 +2157,14 @@ li.tag-strip .parag_16 {
   resize: none;
   font-family: "Heebo", sans-serif;
   font-weight: 400;
-  padding: 0.7rem 0 0 0;
+  padding: 0.4rem 0 0 0;
   box-sizing: border-box;
   overflow-y: auto;
   background: none;
   box-shadow: none;
   width: 100%;
+  border-radius: 0;
+  white-space: break-spaces;
 }
 .input__textarea-wrapper .input__form-textarea::-webkit-scrollbar {
   width: 0.5rem;

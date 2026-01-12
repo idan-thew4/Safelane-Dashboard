@@ -2,67 +2,63 @@
 @use "../../../base/settings.scss";
 
 .input {
-    flex: 0 0 15.9rem;
-    padding: 2rem;
-    box-shadow: 0px -10px 15px 0px rgba(0, 0, 0, 0.05);
-    z-index: 9;
+  flex: 0 0 17rem;
+  padding: 2rem;
+  box-shadow: 0px -10px 15px 0px rgba(0, 0, 0, 0.05);
+  z-index: 9;
+  box-sizing: border-box;
 
-    .basic-button:not(.white-button) {
-        flex: 0 0 11.6rem;
-        margin: 0;
-        justify-content: center;
-    
-    }
+  .basic-button:not(.white-button) {
+    flex: 0 0 11.6rem;
+    margin: 0;
+    justify-content: center;
+    margin: auto;
+  }
+}
 
+.input__templates_headline {
+  white-space: nowrap;
 }
 
 .input__form {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
-
 .input__action-buttons {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    margin-bottom: 2rem;
-
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .input__textarea-wrapper {
-    flex-grow: 1;
+  flex-grow: 1;
+  height: auto;
 
+  .input__form-textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: settings.$font_main;
+    font-weight: 400;
+    padding: 0.4rem 0 0 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background: none;
+    box-shadow: none;
+    width: 100%;
+    border-radius: 0;
+    white-space: break-spaces;
 
-    .input__form-textarea {
-        border:none;
-        outline:none;
-        resize: none;
-        font-family: settings.$font_main;
-        font-weight: 400;
-        padding: 0.7rem 0 0 0 ;
-        box-sizing: border-box;
-        overflow-y: auto;
-        background: none;
-        box-shadow:none;
-        width: 100%;
-    
-    
-        &::-webkit-scrollbar {
-            width: 0.5rem;
-    
-    
-        }
-    
-    
-        &::-webkit-scrollbar-thumb {
-            background: settings.$mid-grey;
-            padding: 2rem;
-            border-radius: 1rem;
-        }
+    &::-webkit-scrollbar {
+      width: 0.5rem;
     }
 
-} 
-
-
-
+    &::-webkit-scrollbar-thumb {
+      background: settings.$mid-grey;
+      padding: 2rem;
+      border-radius: 1rem;
+    }
+  }
+}

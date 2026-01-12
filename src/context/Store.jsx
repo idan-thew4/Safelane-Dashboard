@@ -1,6 +1,8 @@
 import React, { useContext, createContext, useState, useRef, useEffect } from "react";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
+import TextareaAutosize from 'react-textarea-autosize';
+
 
 
 
@@ -267,6 +269,8 @@ const Store = ({ children }) => {
     const navigate = useNavigate();
     const [chatLoader, setChatLoader] = useState(false);
     const [filterLoader, setFilterLoader] = useState(false);
+    const [inputWrapperHeight, setInputWrapperHeight] = useState(21);
+
 
 
 
@@ -284,8 +288,8 @@ const Store = ({ children }) => {
     }];
 
 
-    // const url = 'https://wordpress-1308208-5685135.cloudwaysapps.com/';
-    const url = 'https://cms.lettersontheway.com';
+    const url = 'https://wordpress-1308208-5685135.cloudwaysapps.com/';
+    // const url = 'https://cms.lettersontheway.com';
 
 
 
@@ -644,7 +648,9 @@ const Store = ({ children }) => {
             exportFilterIsOpen,
             setExportFilterIsOpen,
             url,
-            dashboardLoader
+            dashboardLoader,
+            inputWrapperHeight,
+            setInputWrapperHeight
 
         }}>
             {children}

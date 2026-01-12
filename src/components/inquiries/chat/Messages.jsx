@@ -15,7 +15,8 @@ const Messages = ({ id, content }) => {
         inquiries,
         sideMenuType,
         setInquiries,
-        updateChat
+        updateChat,
+        inputWrapperHeight,
 
         // taggingTimeStamp,
         // setTaggingTimeStamp
@@ -248,7 +249,7 @@ const Messages = ({ id, content }) => {
                 })}
                 {tag === ''
                     ?
-                    <li className="tag-strip fixed" ref={StripTag}>
+                    <li className="tag-strip fixed" ref={StripTag} style={{ bottom: `${inputWrapperHeight - 6}rem` }}>
                         <div className="action-bar">
                             <p className="parag_16">תיוג הפניה</p>
                             <div className="tagging-buttons">
