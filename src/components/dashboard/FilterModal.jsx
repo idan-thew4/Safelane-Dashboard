@@ -18,6 +18,7 @@ const FilterModal = ({ firstDate }) => {
 
 
 
+
     const exportFilters = [
         {
             type: 'last-week',
@@ -198,7 +199,11 @@ const FilterModal = ({ firstDate }) => {
 
     }
 
-
+    console.log('firstDate:', firstDate, typeof firstDate);
+    const timestamp = Date.parse(firstDate);
+    console.log('timestamp:', timestamp, new Date(timestamp));
+    const currentDate = new Date();
+    console.log('currentDate:', currentDate);
 
 
     return (
@@ -237,6 +242,10 @@ const FilterModal = ({ firstDate }) => {
 
                 <p className="head_18"><strong>מאיזה טווח תאריכים לייצא?</strong></p>
                 {exportFilters.map((filter, key) => {
+
+                    if (filter.type === 'date-range' && filterMonths.start.length < 2) {
+                        return null;
+                    }
 
                     return (
                         <div key={key} className="dropdown__selection">
