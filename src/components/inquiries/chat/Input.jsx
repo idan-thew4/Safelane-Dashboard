@@ -119,18 +119,12 @@ const Input = () => {
 
                         onHeightChange={height => {
 
-                            console.log('height', height);
-                            console.log('prevHeight.current', prevHeight.current);
-
-
                             if (messageReplay.current.value !== '') {
 
                                 if (height > prevHeight.current) {
                                     setInputWrapperHeight(h => h + 1.5);
-                                    console.log('increased');
                                 } else if (height < prevHeight.current) {
                                     setInputWrapperHeight(h => h - 1.5);
-                                    console.log('decreased');
                                 }
                                 prevHeight.current = height;
 

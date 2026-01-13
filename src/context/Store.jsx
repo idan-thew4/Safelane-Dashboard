@@ -361,8 +361,7 @@ const Store = ({ children }) => {
             if (!response.ok) {
                 redirectsToLogin();
             }
-            // console.log(data)
-            // setChat({ ...data.chat })
+
         } catch (error) {
             console.error('Error fetching data:', error);
             navigate(`/login`);
@@ -410,7 +409,6 @@ const Store = ({ children }) => {
 
         if (selection !== 'clear') {
 
-            // console.log(selection)
 
 
             switch (type) {
@@ -523,7 +521,6 @@ const Store = ({ children }) => {
         //Update Messages setter 
         const updatedMessages = { ...messages, [replayKey]: replayData };
 
-        console.log(updatedMessages)
 
 
         scrollToBottom(500);

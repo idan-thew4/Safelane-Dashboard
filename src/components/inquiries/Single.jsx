@@ -112,7 +112,6 @@ const Single = ({ item, itemKey, isActive, onItemClick }) => {
             if (moveToArchive.replayed && moveToArchive.id !== '') {
                 if (id !== moveToArchive.id) {
                     moveInquiry(0, inquiries.opened.find(item => item['ticket_id'] === moveToArchive.id), null);
-                    console.log(inquiries.opened.find(item => item['ticket_id'] === moveToArchive.id))
                 }
             }
 

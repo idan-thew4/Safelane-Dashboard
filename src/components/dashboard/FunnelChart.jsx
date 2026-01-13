@@ -116,10 +116,6 @@ const FunnelChart = ({ title, subTitle, data, shape, type }) => {
                         {shape === 'polygon' &&
                             <div className="funnel-chart__total-percentage">
 
-                                {console.log('dataPoint', data[dataPoints[0]][key])}
-                                {console.log('letters', data[dataPoints[0]]['letters'])}
-
-
 
 
                                 {Number((data[dataPoints[0]]['letters'])) !== 0 && <p className="num_20">{((data[dataPoints[0]][key] / data[dataPoints[0]]['letters']) * 100).toFixed(1)}%</p>}

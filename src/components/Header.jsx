@@ -17,10 +17,6 @@ const Header = () => {
 
 
 
-    const getDropdownStatus = (e) => {
-        console.log(e.target.closest('.header__header-user-dropdown'))
-    }
-
 
 
     if (isLoading) {

@@ -137,7 +137,7 @@ const Login = () => {
 
 
 
-        saveTokenToCookie(data.user_display_name, 30, 'user');
+        saveTokenToCookie(data.user_display_name, 10080, 'user');
 
       }).catch(error => {
         setLoader(false);

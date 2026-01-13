@@ -32,7 +32,6 @@ const List = ({ list }) => {
     const [day, month, year] = dateString.split('.').map(Number);
     // Months are zero-based in JavaScript Dates, so subtract 1 from the month
     return new Date(year, month - 1, day);
-    // console.log(new Date(year, month - 1, day))
   };
 
   Object.keys(list).map((type, key) => {
