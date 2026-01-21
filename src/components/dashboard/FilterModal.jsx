@@ -75,7 +75,7 @@ const FilterModal = ({ firstDate }) => {
 
     }
 
-    const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+    const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
     const monthsHeb = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסוט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
 
@@ -215,11 +215,7 @@ const FilterModal = ({ firstDate }) => {
 
     }
 
-    console.log('firstDate:', firstDate, typeof firstDate);
-    const timestamp = Date.parse(firstDate);
-    console.log('timestamp:', timestamp, new Date(timestamp));
-    const currentDate = new Date();
-    console.log('currentDate:', currentDate);
+    console.log('months:', filterMonths);
 
 
     return (
@@ -271,11 +267,16 @@ const FilterModal = ({ firstDate }) => {
                                     id={filter.type}
                                     type='radio'
                                     onClick={(e) => {
-                                        e.target.id === 'date-range'
-                                            ?
-                                            setFilterType({ dateRange: { start: filterMonths.start[filterMonths.start.length - 2].value, end: filterMonths.end[filterMonths.end.length - 1].value } })
-                                            :
-                                            setFilterType(e.target.id)
+                                        if (e.target.id === 'date-range') {
+                                            // Start: always '1-2024'
+                                            const start = '1-2024';
+                                            // End: current month and year
+                                            const now = new Date();
+                                            const end = `${now.getMonth() + 1}-${now.getFullYear()}`;
+                                            setFilterType({ dateRange: { start, end } });
+                                        } else {
+                                            setFilterType(e.target.id);
+                                        }
                                     }}
                                 />
                                 <label htmlFor={filter.type}>
@@ -294,11 +295,19 @@ const FilterModal = ({ firstDate }) => {
                                 minDate={new Date('2024-01-01')}
                                 maxDate={new Date()}
                                 shouldDisableYear={(year) => year.getFullYear() < 2024}
-                                value={value.selected ? value.selected[0] : new Date('2024-01-01')}
+                                value={value.selected && value.selected[0] instanceof Date ? value.selected[0] : new Date('2024-01-01')}
                                 onChange={(newValue) => {
-                                    const end = value.selected ? value.selected[1] : null;
+                                    // Always store Date objects in value.selected
+                                    const end = value.selected ? value.selected[1] : (filterType.dateRange ? filterType.dateRange.end : null);
                                     setValue({ ...value, selected: [newValue, end] });
-                                    setFilterType({ dateRange: { start: newValue, end } });
+                                    // Format for filterType only
+                                    let result = '';
+                                    if (newValue instanceof Date && !isNaN(newValue)) {
+                                        const month = newValue.getMonth() + 1;
+                                        const year = newValue.getFullYear();
+                                        result = `${month}-${year}`;
+                                    }
+                                    setFilterType(prev => ({ dateRange: { start: result, end: prev.dateRange ? prev.dateRange.end : null } }));
                                 }}
                                 renderInput={(params) => <input {...params} className="dark-border" />}
                                 slotProps={{ textField: { placeholder: 'בחר חודש ושנה' } }}
@@ -314,12 +323,20 @@ const FilterModal = ({ firstDate }) => {
                                 minDate={new Date('2024-01-01')}
                                 maxDate={new Date()}
                                 shouldDisableYear={(year) => year.getFullYear() < 2024}
-                                value={value.selected ? value.selected[1] : new Date()}
-                                minDate={value.selected ? value.selected[0] || new Date('2024-01-01') : new Date('2024-01-01')}
+                                value={value.selected && value.selected[1] instanceof Date ? value.selected[1] : new Date()}
+                                minDate={value.selected && value.selected[0] instanceof Date ? value.selected[0] : new Date('2024-01-01')}
                                 onChange={(newValue) => {
-                                    const start = value.selected ? value.selected[0] : null;
+                                    // Always store Date objects in value.selected
+                                    const start = value.selected ? value.selected[0] : (filterType.dateRange ? filterType.dateRange.start : null);
                                     setValue({ ...value, selected: [start, newValue] });
-                                    setFilterType({ dateRange: { start, end: newValue } });
+                                    // Format for filterType only
+                                    let result = '';
+                                    if (newValue instanceof Date && !isNaN(newValue)) {
+                                        const month = newValue.getMonth() + 1;
+                                        const year = newValue.getFullYear();
+                                        result = `${month}-${year}`;
+                                    }
+                                    setFilterType(prev => ({ dateRange: { start: prev.dateRange ? prev.dateRange.start : null, end: result } }));
                                 }}
                                 renderInput={(params) => <input {...params} className="dark-border" />}
                                 slotProps={{ textField: { placeholder: 'בחר חודש ושנה' } }}
