@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@datepicker-react/hooks": "^2.8.4",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/x-date-pickers": "^8.25.0",
+    "date-fns": "^4.1.0",
     "i": "^0.3.7",
     "js-cookie": "^3.0.5",
     "npm": "^10.2.0",

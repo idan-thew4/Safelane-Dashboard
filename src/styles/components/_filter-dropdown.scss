@@ -554,15 +554,61 @@
     text-align: center;
   }
 
+  .MuiFormControl-root {
+    height: 4rem;
+
+    .css-1fb7els-MuiPickersSectionList-root-MuiPickersInputBase-sectionsContainer-MuiPickersOutlinedInput-sectionsContainer {
+      padding: 0;
+    }
+
+    .MuiPickersInputBase-root.MuiPickersOutlinedInput-root.MuiPickersInputBase-colorPrimary.MuiPickersInputBase-adornedEnd.css-vycme6-MuiPickersInputBase-root-MuiPickersOutlinedInput-root {
+      height: 100%;
+      padding-left: 1rem;
+
+      &.Mui-focused {
+        .arrow-icon {
+          rotate: 270deg;
+        }
+      }
+    }
+
+    .MuiPickersSectionList-root.MuiPickersInputBase-sectionsContainer.css-1fb7els-MuiPickersSectionList-root-MuiPickersInputBase-sectionsContainer-MuiPickersOutlinedInput-sectionsContainer {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 0.5rem;
+    }
+
+    .MuiInputAdornment-root.MuiInputAdornment-positionEnd.MuiInputAdornment-outlined.MuiInputAdornment-sizeMedium.css-elo8k2-MuiInputAdornment-root {
+      margin: 0;
+    }
+
+    .css-5wchs2-MuiDateCalendar-root {
+      height: auto;
+      padding: 0 1rem 2rem 1rem;
+    }
+  }
+
   .filter-dropdown {
     cursor: pointer;
+    border-color: transparent;
+    background-color: lighten(settings.$blue, 40%);
+    border: none;
+    box-shadow: none;
+    height: 4rem;
+    border-radius: 0.4rem;
+
+    * {
+      font-size: 1.4rem !important;
+      font-family: settings.$font_main;
+      border: none;
+    }
+
+    .arrow-icon {
+      rotate: 90deg;
+      transition: 0.3s all;
+    }
 
     &__control {
-      border-color: transparent;
-      background-color: lighten(settings.$blue, 40%);
-      border: none;
-      box-shadow: none;
-
       &:hover {
         border-color: transparent;
       }
@@ -632,4 +678,48 @@
       }
     }
   }
+}
+
+.css-5wchs2-MuiDateCalendar-root {
+  height: auto;
+}
+
+.MuiPopper-root.MuiPickerPopper-root.css-18ultcs-MuiPopper-root-MuiPickerPopper-root {
+  * {
+    font-size: 1.4rem !important;
+    font-family: settings.$font_main;
+    border: none;
+
+    &:not(button) {
+      height: auto;
+    }
+  }
+
+  .MuiPickersCalendarHeader-labelContainer.css-cyfsxc-MuiPickersCalendarHeader-labelContainer {
+    margin: 0;
+  }
+
+  button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-15a32k7-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton,
+  button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-16hplv9-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
+    width: 10px;
+    height: 10px;
+    svg {
+      display: none;
+    }
+    background: url("../assets/arrow_black.svg");
+    background-size: 10px;
+    margin-right: 1rem;
+  }
+}
+
+button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-15a32k7-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
+  rotate: 90deg;
+}
+
+button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-16hplv9-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
+  rotate: 270deg;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPickerPopper-paper.css-151nkvq-MuiPaper-root-MuiPickerPopper-paper {
+  padding: 0 1rem 2rem 1rem;
 }

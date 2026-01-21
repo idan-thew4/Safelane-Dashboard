@@ -1,9 +1,18 @@
+
 import { useEffect, useState, useRef } from "react";
 import Modal from 'react-modal';
-import { useStore } from "../../Context/Store";
+import { useStore } from "../../context/Store";
 import Select, { components } from "react-select";
 import clearX from '../../assets/clear-x.svg';
-import Cookies from 'js-cookie';
+
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import heLocale from 'date-fns/locale/he';
+import arrow from '../../assets/arrow_black.svg';
+
+
+
 
 
 
@@ -148,6 +157,13 @@ const FilterModal = ({ firstDate }) => {
 
     }, [firstDate]);
 
+    useEffect(() => {
+
+        console.log('filterType changed:', filterType);
+
+
+    }, [filterType])
+
 
     const downloadFile = (url) => {
         // Create a temporary anchor element
@@ -208,125 +224,120 @@ const FilterModal = ({ firstDate }) => {
 
     return (
 
-        <Modal
-            isOpen={exportFilterIsOpen}
-            contentLabel="Selected Option"
-            ariaHideApp={false}
-            portalClassName="chat-modal"
-            style={{
-                content: {
-                    position: 'absolute',
-                    top: '0',
-                    left: '0',
-                    right: '0',
-                    bottom: '0',
-                    outline: 'none',
-                    padding: '0',
-                    border: 'none',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    background: 'rgba(0, 0, 0, .5)',
-                }
-            }}
-        >
-            <div className="filter-modal">
-                <button className="close"
-                    onClick={() => {
-                        setExportFilterIsOpen(false);
-                        setFilterType('')
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={heLocale}>
+            <Modal
+                isOpen={exportFilterIsOpen}
+                contentLabel="Selected Option"
+                ariaHideApp={false}
+                portalClassName="chat-modal"
+                style={{
+                    content: {
+                        position: 'absolute',
+                        top: '0',
+                        left: '0',
+                        right: '0',
+                        bottom: '0',
+                        outline: 'none',
+                        padding: '0',
+                        border: 'none',
+                        overflow: 'hidden',
+                        display: 'flex',
+                        background: 'rgba(0, 0, 0, .5)',
                     }
-                    }>
+                }}
+            >
+                <div className="filter-modal">
+                    <button className="close"
+                        onClick={() => {
+                            setExportFilterIsOpen(false);
+                            setFilterType('')
+                        }
+                        }>
 
-                    <img src={clearX} />
-                </button>
+                        <img src={clearX} />
+                    </button>
 
-                <p className="head_18"><strong>מאיזה טווח תאריכים לייצא?</strong></p>
-                {exportFilters.map((filter, key) => {
+                    <p className="head_18"><strong>מאיזה טווח תאריכים לייצא?</strong></p>
+                    {exportFilters.map((filter, key) => {
 
-                    if (filter.type === 'date-range' && filterMonths.start.length < 2) {
-                        return null;
-                    }
+                        if (filter.type === 'date-range' && filterMonths.start.length < 2) {
+                            return null;
+                        }
 
-                    return (
-                        <div key={key} className="dropdown__selection">
-                            <input
-                                name='radioGroup'
-                                id={filter.type}
-                                type='radio'
-                                onClick={(e) => {
-                                    e.target.id === 'date-range'
-                                        ?
-                                        setFilterType({ dateRange: { start: filterMonths.start[filterMonths.start.length - 2].value, end: filterMonths.end[filterMonths.end.length - 1].value } })
-                                        :
-                                        setFilterType(e.target.id)
+                        return (
+                            <div key={key} className="dropdown__selection">
+                                <input
+                                    name='radioGroup'
+                                    id={filter.type}
+                                    type='radio'
+                                    onClick={(e) => {
+                                        e.target.id === 'date-range'
+                                            ?
+                                            setFilterType({ dateRange: { start: filterMonths.start[filterMonths.start.length - 2].value, end: filterMonths.end[filterMonths.end.length - 1].value } })
+                                            :
+                                            setFilterType(e.target.id)
+                                    }}
+                                />
+                                <label htmlFor={filter.type}>
+                                    <div className={`dropdown__content`}>
+                                        <span className="parag_14_main query"><strong>{filter.copy}</strong></span>
+                                    </div>
+                                </label>
+                            </div>
+                        )
+
+                    })}
+                    {typeof filterType !== 'string' &&
+                        <div className="filter-modal__date-range">
+                            <DatePicker
+                                views={["year", "month"]}
+                                minDate={new Date('2024-01-01')}
+                                maxDate={new Date()}
+                                shouldDisableYear={(year) => year.getFullYear() < 2024}
+                                value={value.selected ? value.selected[0] : new Date('2024-01-01')}
+                                onChange={(newValue) => {
+                                    const end = value.selected ? value.selected[1] : null;
+                                    setValue({ ...value, selected: [newValue, end] });
+                                    setFilterType({ dateRange: { start: newValue, end } });
+                                }}
+                                renderInput={(params) => <input {...params} className="dark-border" />}
+                                slotProps={{ textField: { placeholder: 'בחר חודש ושנה' } }}
+                                className="dark-border filter-dropdown"
+                                slots={{
+                                    openPickerIcon: () => <img className="arrow-icon" src={arrow} alt="arrow-icon" style={{ width: 10, height: 10 }} />
                                 }}
                             />
-                            <label htmlFor={filter.type}>
-                                <div className={`dropdown__content`}>
-                                    <span className="parag_14_main query"><strong>{filter.copy}</strong></span>
-                                </div>
-                            </label>
+                            <span className="parag_14_main until">עד</span>
+                            <DatePicker
+                                // format="MM/yyyy"
+                                views={["year", "month"]}
+                                minDate={new Date('2024-01-01')}
+                                maxDate={new Date()}
+                                shouldDisableYear={(year) => year.getFullYear() < 2024}
+                                value={value.selected ? value.selected[1] : new Date()}
+                                minDate={value.selected ? value.selected[0] || new Date('2024-01-01') : new Date('2024-01-01')}
+                                onChange={(newValue) => {
+                                    const start = value.selected ? value.selected[0] : null;
+                                    setValue({ ...value, selected: [start, newValue] });
+                                    setFilterType({ dateRange: { start, end: newValue } });
+                                }}
+                                renderInput={(params) => <input {...params} className="dark-border" />}
+                                slotProps={{ textField: { placeholder: 'בחר חודש ושנה' } }}
+                                className="dark-border filter-dropdown"
+                                slots={{
+                                    openPickerIcon: () => <img className="arrow-icon" src={arrow} alt="arrow-icon" style={{ width: 10, height: 10 }} />
+                                }}
+                            />
                         </div>
-                    )
-
-                })}
-                {typeof filterType !== 'string' &&
-
-                    <div className="filter-modal__date-range">
-                        <Select
-                            components={{
-                                DropdownIndicator: () => null,
-                                IndicatorSeparator: () => null,
-                            }}
-                            // menuIsOpen={true}
-                            className="dark-border"
-                            classNamePrefix="filter-dropdown"
-                            options={filterMonths.start}
-                            defaultValue={filterMonths.start[filterMonths.start.length - 2]}
-                            onChange={
-                                (e) => {
-                                    getDate(e, true);
-                                    setValue({ default: e, selected: undefined })
-
-                                }
-
-                            }
-                            styles={{
-                                borderColor: 'black'
-
-                            }}
-                        />
-                        <p className="parag_14_main until">עד</p>
-
-                        <Select
-                            components={{
-                                DropdownIndicator: () => null,
-                                IndicatorSeparator: () => null,
-                            }}
-                            // menuIsOpen={true}
-                            className="dark-border"
-                            classNamePrefix="filter-dropdown"
-                            options={filterMonths.end}
-                            value={value.selected ? value.selected : value.default}
-                            onChange={(e) => {
-                                getDate(e, false, true);
-                                setValue(prevStat => ({ default: prevStat.default, selected: e }))
-
-
-                            }
-
-                            }
-                        />
-
-                    </div>
-                }
-                <button
-                    className="basic-button export"
-                    disabled={!filterType}
-                    onClick={() => getExcelSS(filterType)}
-                >ייצוא נתונים</button>
-            </div>
-        </Modal>
+                    }
+                    <button
+                        className="basic-button export"
+                        disabled={!filterType}
+                        onClick={() => getExcelSS(filterType)}
+                    >ייצוא נתונים</button>
+                </div>
+            </Modal>
+        </LocalizationProvider>
 
 
     )
