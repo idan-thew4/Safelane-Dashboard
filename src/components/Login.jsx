@@ -28,6 +28,7 @@ const Login = () => {
   const [waitForResponse, setWaitForResponse] = useState(false);
   const recaptchaRef = useRef();
   const [loader, setLoader] = useState(false);
+  const [checkLogin, setCheckLogin] = useState(false);
 
 
 
@@ -62,7 +63,7 @@ const Login = () => {
   const values = getValues();
 
   const checkTokenRemote = () => {
-    fetch(`${url}wp-json/safelane-api/check-token-remote`, {
+    fetch(`${url}/wp-json/safelane-api/check-token-remote`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -71,17 +72,25 @@ const Login = () => {
     }).then(response => response.json())
       .then(data => {
 
+
         if (data.success) {
           navigate(`/dashboard`);
+          setCheckLogin(false);
+
+        } else {
+          setCheckLogin(true);
         }
 
 
       })
   }
-  useEffect(() => {
 
+  useEffect(() => {
     checkTokenRemote();
+
   }, [])
+
+  console.log(checkLogin)
 
   // Function to save token in a cookie with an expiration time
   const saveTokenToCookie = (value, expirationTimeInMinutes, type) => {
@@ -146,8 +155,9 @@ const Login = () => {
           } else {
             setSubmitError('אחד או יותר מהפרטים לא נכונים');
             setWaitForResponse(false);
-            recaptchaRef.current.reset();
-
+            if (recaptchaRef.current) {
+              recaptchaRef.current.reset();
+            }
           }
 
 
@@ -341,18 +351,22 @@ const Login = () => {
       setSubmitError();
       setWaitForResponse(false);
       if (!otp) {
-        recaptchaRef.current.reset();
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
       }
       attemptsRef.current = 0;
 
     }
   }, [timeLeft]);
 
+  if (!checkLogin) {
+    return <div className="center-loader">
 
+      <img className="loader" src={loaderSVG} />
+    </div>
 
-
-
-
+  }
 
 
   return (

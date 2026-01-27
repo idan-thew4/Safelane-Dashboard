@@ -928,31 +928,6 @@ ul.menu li a:hover {
 .filter-modal__date-range .until {
   text-align: center;
 }
-.filter-modal__date-range .MuiFormControl-root {
-  height: 4rem;
-}
-.filter-modal__date-range .MuiFormControl-root .css-1fb7els-MuiPickersSectionList-root-MuiPickersInputBase-sectionsContainer-MuiPickersOutlinedInput-sectionsContainer {
-  padding: 0;
-}
-.filter-modal__date-range .MuiFormControl-root .MuiPickersInputBase-root.MuiPickersOutlinedInput-root.MuiPickersInputBase-colorPrimary.MuiPickersInputBase-adornedEnd.css-vycme6-MuiPickersInputBase-root-MuiPickersOutlinedInput-root {
-  height: 100%;
-  padding-left: 1rem;
-}
-.filter-modal__date-range .MuiFormControl-root .MuiPickersInputBase-root.MuiPickersOutlinedInput-root.MuiPickersInputBase-colorPrimary.MuiPickersInputBase-adornedEnd.css-vycme6-MuiPickersInputBase-root-MuiPickersOutlinedInput-root.Mui-focused .arrow-icon {
-  rotate: 270deg;
-}
-.filter-modal__date-range .MuiFormControl-root .MuiPickersSectionList-root.MuiPickersInputBase-sectionsContainer.css-1fb7els-MuiPickersSectionList-root-MuiPickersInputBase-sectionsContainer-MuiPickersOutlinedInput-sectionsContainer {
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 0.5rem;
-}
-.filter-modal__date-range .MuiFormControl-root .MuiInputAdornment-root.MuiInputAdornment-positionEnd.MuiInputAdornment-outlined.MuiInputAdornment-sizeMedium.css-elo8k2-MuiInputAdornment-root {
-  margin: 0;
-}
-.filter-modal__date-range .MuiFormControl-root .css-5wchs2-MuiDateCalendar-root {
-  height: auto;
-  padding: 0 1rem 2rem 1rem;
-}
 .filter-modal__date-range .filter-dropdown {
   cursor: pointer;
   border-color: transparent;
@@ -1025,44 +1000,69 @@ ul.menu li a:hover {
   background-color: transparent;
   color: #1A8AFF;
 }
+.filter-modal__date-range .MuiFormControl-root {
+  height: 4rem;
+}
+.filter-modal__date-range .MuiFormControl-root .MuiPickersInputBase-sectionsContainer {
+  padding: 0;
+}
+.filter-modal__date-range .MuiFormControl-root .MuiPickersInputBase-root.MuiPickersOutlinedInput-root.MuiPickersInputBase-colorPrimary.MuiPickersInputBase-adornedEnd {
+  height: 100%;
+  padding-left: 1rem;
+}
+.filter-modal__date-range .MuiFormControl-root .MuiPickersInputBase-root.MuiPickersOutlinedInput-root.MuiPickersInputBase-colorPrimary.MuiPickersInputBase-adornedEnd.Mui-focused .arrow-icon {
+  rotate: 270deg;
+}
+.filter-modal__date-range .MuiFormControl-root .MuiPickersSectionList-root.MuiPickersInputBase-sectionsContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.5rem;
+}
+.filter-modal__date-range .MuiFormControl-root .MuiInputAdornment-root.MuiInputAdornment-positionEnd.MuiInputAdornment-outlined.MuiInputAdornment-sizeMedium {
+  margin: 0;
+}
+.filter-modal__date-range .MuiFormControl-root .css-5wchs2-MuiDateCalendar-root {
+  height: auto;
+  padding: 0 1rem 2rem 1rem;
+}
 
 .css-5wchs2-MuiDateCalendar-root {
   height: auto;
 }
 
-.MuiPopper-root.MuiPickerPopper-root.css-18ultcs-MuiPopper-root-MuiPickerPopper-root * {
+.MuiPopper-root.MuiPickerPopper-root * {
   font-size: 1.4rem !important;
   font-family: "Heebo", sans-serif;
   border: none;
 }
-.MuiPopper-root.MuiPickerPopper-root.css-18ultcs-MuiPopper-root-MuiPickerPopper-root *:not(button) {
+.MuiPopper-root.MuiPickerPopper-root *:not(button) {
   height: auto;
 }
-.MuiPopper-root.MuiPickerPopper-root.css-18ultcs-MuiPopper-root-MuiPickerPopper-root .MuiPickersCalendarHeader-labelContainer.css-cyfsxc-MuiPickersCalendarHeader-labelContainer {
+.MuiPopper-root.MuiPickerPopper-root .MuiPickersCalendarHeader-labelContainer {
   margin: 0;
 }
-.MuiPopper-root.MuiPickerPopper-root.css-18ultcs-MuiPopper-root-MuiPickerPopper-root button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-15a32k7-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton,
-.MuiPopper-root.MuiPickerPopper-root.css-18ultcs-MuiPopper-root-MuiPickerPopper-root button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-16hplv9-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
+.MuiPopper-root.MuiPickerPopper-root button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton,
+.MuiPopper-root.MuiPickerPopper-root button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton {
   width: 10px;
   height: 10px;
   background: url("../assets/arrow_black.svg");
   background-size: 10px;
   margin-right: 1rem;
 }
-.MuiPopper-root.MuiPickerPopper-root.css-18ultcs-MuiPopper-root-MuiPickerPopper-root button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-15a32k7-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton svg,
-.MuiPopper-root.MuiPickerPopper-root.css-18ultcs-MuiPopper-root-MuiPickerPopper-root button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-16hplv9-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton svg {
+.MuiPopper-root.MuiPickerPopper-root button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton svg,
+.MuiPopper-root.MuiPickerPopper-root button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton svg {
   display: none;
 }
 
-button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-15a32k7-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
+button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton {
   rotate: 90deg;
 }
 
-button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton.css-16hplv9-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
+button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.MuiPickersCalendarHeader-switchViewButton[aria-label="calendar view is open, switch to year view"] {
   rotate: 270deg;
 }
 
-.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPickerPopper-paper.css-151nkvq-MuiPaper-root-MuiPickerPopper-paper {
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPickerPopper-paper {
   padding: 0 1rem 2rem 1rem;
 }
 
@@ -2493,6 +2493,21 @@ button.clearInput.show {
 }
 .login__logos img:last-child {
   margin-left: 0;
+}
+
+.center-loader {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.center-loader .loader {
+  width: 10rem;
+  height: inherit;
+  position: absolute;
+  z-index: 2;
+  margin: auto;
 }
 
 @media screen and (max-width: 1023px) {
