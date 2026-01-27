@@ -294,7 +294,7 @@ const FilterModal = ({ firstDate }) => {
                     <div className="filter-modal__date-range">
                         <DatePicker
                             views={["year", "month"]}
-                            // minDate={new Date('2024-01-01')}
+                            minDate={new Date('2024-01-01')}
                             maxDate={new Date()}
                             shouldDisableYear={(year) => year.getFullYear() < 2024}
                             value={value.selected && value.selected[0] instanceof Date ? value.selected[0] : new Date('2024-01-01')}

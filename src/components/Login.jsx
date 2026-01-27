@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useStore } from "../context/Store";
+import { da } from "date-fns/locale";
 
 
 
@@ -59,6 +60,28 @@ const Login = () => {
   } = useForm();
 
   const values = getValues();
+
+  const checkTokenRemote = () => {
+    fetch(`${url}wp-json/safelane-api/check-token-remote`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    }).then(response => response.json())
+      .then(data => {
+
+        if (data.success) {
+          navigate(`/dashboard`);
+        }
+
+
+      })
+  }
+  useEffect(() => {
+
+    checkTokenRemote();
+  }, [])
 
   // Function to save token in a cookie with an expiration time
   const saveTokenToCookie = (value, expirationTimeInMinutes, type) => {
