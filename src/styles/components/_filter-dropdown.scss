@@ -206,6 +206,12 @@
 }
 
 .dropdown__selection {
+  display: none;
+
+  &:has([for="date-range"]) {
+    display: unset;
+  }
+
   &.disabled {
     &.waiting-time label .query:before {
       background-color: settings.$light-grey !important;

@@ -664,6 +664,12 @@ ul.menu li a:hover {
   cursor: pointer;
 }
 
+.dropdown__selection {
+  display: none;
+}
+.dropdown__selection:has([for=date-range]) {
+  display: unset;
+}
 .dropdown__selection.disabled.waiting-time label .query:before {
   background-color: #D9D9D9 !important;
 }

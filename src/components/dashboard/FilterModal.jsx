@@ -71,6 +71,7 @@ const FilterModal = ({ firstDate }) => {
 
         setFilterMonths({ start: months, end: months });
         setValue({ default: months[months.length - 1], selected: '' });
+        setFilterType({ dateRange: { start: `${getMonthName(startDate.getMonth())}-${startDate.getFullYear()}`, end: `${getMonthName(currentDate.getMonth())}-${currentDate.getFullYear()}` } });
 
 
     }
@@ -246,7 +247,7 @@ const FilterModal = ({ firstDate }) => {
                     <button className="close"
                         onClick={() => {
                             setExportFilterIsOpen(false);
-                            setFilterType('')
+                            // setFilterType('')
                         }
                         }>
 
@@ -263,10 +264,11 @@ const FilterModal = ({ firstDate }) => {
                         return (
                             <div key={key} className="dropdown__selection">
                                 <input
+                                    checked={filter.type === (typeof filterType === 'string' ? filterType : 'date-range')}
                                     name='radioGroup'
                                     id={filter.type}
                                     type='radio'
-                                    onClick={(e) => {
+                                    onChange={(e) => {
                                         if (e.target.id === 'date-range') {
                                             // Start: always '1-2024'
                                             const start = '1-2024';
@@ -288,65 +290,65 @@ const FilterModal = ({ firstDate }) => {
                         )
 
                     })}
-                    {typeof filterType !== 'string' &&
-                        <div className="filter-modal__date-range">
-                            <DatePicker
-                                views={["year", "month"]}
-                                minDate={new Date('2024-01-01')}
-                                maxDate={new Date()}
-                                shouldDisableYear={(year) => year.getFullYear() < 2024}
-                                value={value.selected && value.selected[0] instanceof Date ? value.selected[0] : new Date('2024-01-01')}
-                                onChange={(newValue) => {
-                                    // Always store Date objects in value.selected
-                                    const end = value.selected ? value.selected[1] : (filterType.dateRange ? filterType.dateRange.end : null);
-                                    setValue({ ...value, selected: [newValue, end] });
-                                    // Format for filterType only
-                                    let result = '';
-                                    if (newValue instanceof Date && !isNaN(newValue)) {
-                                        const month = newValue.getMonth() + 1;
-                                        const year = newValue.getFullYear();
-                                        result = `${month}-${year}`;
-                                    }
-                                    setFilterType(prev => ({ dateRange: { start: result, end: prev.dateRange ? prev.dateRange.end : null } }));
-                                }}
-                                renderInput={(params) => <input {...params} className="dark-border" />}
-                                slotProps={{ textField: { placeholder: 'בחר חודש ושנה' } }}
-                                className="dark-border filter-dropdown"
-                                slots={{
-                                    openPickerIcon: () => <img className="arrow-icon" src={arrow} alt="arrow-icon" style={{ width: 10, height: 10 }} />
-                                }}
-                            />
-                            <span className="parag_14_main until">עד</span>
-                            <DatePicker
-                                // format="MM/yyyy"
-                                views={["year", "month"]}
-                                minDate={new Date('2024-01-01')}
-                                maxDate={new Date()}
-                                shouldDisableYear={(year) => year.getFullYear() < 2024}
-                                value={value.selected && value.selected[1] instanceof Date ? value.selected[1] : new Date()}
-                                minDate={value.selected && value.selected[0] instanceof Date ? value.selected[0] : new Date('2024-01-01')}
-                                onChange={(newValue) => {
-                                    // Always store Date objects in value.selected
-                                    const start = value.selected ? value.selected[0] : (filterType.dateRange ? filterType.dateRange.start : null);
-                                    setValue({ ...value, selected: [start, newValue] });
-                                    // Format for filterType only
-                                    let result = '';
-                                    if (newValue instanceof Date && !isNaN(newValue)) {
-                                        const month = newValue.getMonth() + 1;
-                                        const year = newValue.getFullYear();
-                                        result = `${month}-${year}`;
-                                    }
-                                    setFilterType(prev => ({ dateRange: { start: prev.dateRange ? prev.dateRange.start : null, end: result } }));
-                                }}
-                                renderInput={(params) => <input {...params} className="dark-border" />}
-                                slotProps={{ textField: { placeholder: 'בחר חודש ושנה' } }}
-                                className="dark-border filter-dropdown"
-                                slots={{
-                                    openPickerIcon: () => <img className="arrow-icon" src={arrow} alt="arrow-icon" style={{ width: 10, height: 10 }} />
-                                }}
-                            />
-                        </div>
-                    }
+                    {/* {typeof filterType !== 'string' && */}
+                    <div className="filter-modal__date-range">
+                        <DatePicker
+                            views={["year", "month"]}
+                            // minDate={new Date('2024-01-01')}
+                            maxDate={new Date()}
+                            shouldDisableYear={(year) => year.getFullYear() < 2024}
+                            value={value.selected && value.selected[0] instanceof Date ? value.selected[0] : new Date('2024-01-01')}
+                            onChange={(newValue) => {
+                                // Always store Date objects in value.selected
+                                const end = value.selected ? value.selected[1] : (filterType.dateRange ? filterType.dateRange.end : null);
+                                setValue({ ...value, selected: [newValue, end] });
+                                // Format for filterType only
+                                let result = '';
+                                if (newValue instanceof Date && !isNaN(newValue)) {
+                                    const month = newValue.getMonth() + 1;
+                                    const year = newValue.getFullYear();
+                                    result = `${month}-${year}`;
+                                }
+                                setFilterType(prev => ({ dateRange: { start: result, end: prev.dateRange ? prev.dateRange.end : null } }));
+                            }}
+                            renderInput={(params) => <input {...params} className="dark-border" />}
+                            slotProps={{ textField: { placeholder: 'בחר חודש ושנה' } }}
+                            className="dark-border filter-dropdown"
+                            slots={{
+                                openPickerIcon: () => <img className="arrow-icon" src={arrow} alt="arrow-icon" style={{ width: 10, height: 10 }} />
+                            }}
+                        />
+                        <span className="parag_14_main until">עד</span>
+                        <DatePicker
+                            // format="MM/yyyy"
+                            views={["year", "month"]}
+                            // minDate={new Date('2024-01-01')}
+                            maxDate={new Date()}
+                            shouldDisableYear={(year) => year.getFullYear() < 2024}
+                            value={value.selected && value.selected[1] instanceof Date ? value.selected[1] : new Date()}
+                            minDate={value.selected && value.selected[0] instanceof Date ? value.selected[0] : new Date('2024-01-01')}
+                            onChange={(newValue) => {
+                                // Always store Date objects in value.selected
+                                const start = value.selected ? value.selected[0] : (filterType.dateRange ? filterType.dateRange.start : null);
+                                setValue({ ...value, selected: [start, newValue] });
+                                // Format for filterType only
+                                let result = '';
+                                if (newValue instanceof Date && !isNaN(newValue)) {
+                                    const month = newValue.getMonth() + 1;
+                                    const year = newValue.getFullYear();
+                                    result = `${month}-${year}`;
+                                }
+                                setFilterType(prev => ({ dateRange: { start: prev.dateRange ? prev.dateRange.start : null, end: result } }));
+                            }}
+                            renderInput={(params) => <input {...params} className="dark-border" />}
+                            slotProps={{ textField: { placeholder: 'בחר חודש ושנה' } }}
+                            className="dark-border filter-dropdown"
+                            slots={{
+                                openPickerIcon: () => <img className="arrow-icon" src={arrow} alt="arrow-icon" style={{ width: 10, height: 10 }} />
+                            }}
+                        />
+                    </div>
+                    {/* } */}
                     <button
                         className="basic-button export"
                         disabled={!filterType}

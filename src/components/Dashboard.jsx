@@ -40,7 +40,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard basic-grid">
             <FilterModal
-                firstDate={data.firstDate}
+                firstDate={'2024-01-01'}
             />
             <div className="dashboard__header">
                 <h1 className="dashboard__headline head_30">תמונת מצב</h1>
